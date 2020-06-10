@@ -1,0 +1,61 @@
+{title: "Evaluate the purpose of the image",
+ type: "nary",
+ content: [
+   {text: "Icon",
+    value: 0},
+   {text: "Visual interest only",
+    value: 1},
+   {text: "Provides information",
+    value: 2}
+ ],
+ children: [
+   {value: 0,
+    title: "Prepares student for activity or represents a concept?",
+    type: "binary",
+    children: [
+      {value: 0,
+       title: "Describe (Go to image description template)"},
+      {value: 1,
+       title: "Do not describe"}
+    ]
+   },
+   {value: 1,
+    title: "Do not describe"},
+   {value: 2,
+    type: "binary"
+    title: "Image provides additional essential info?",
+    children: [
+      {value: 0,
+       content: "Do not describe"},
+      {value: 1,
+       type: "binary",
+       content "Is there text embedded within the image?",
+       children: [
+         {value: 1,
+          title: "Attempt OCR or type text"},
+         {value: 0,
+          type: "binary",
+          title: "Does student need spatial info from graphic?",
+          children: [
+            {value: 0,
+             title: "Describe (Go to image description template)"
+            },
+            {value: 1,
+             type: "binary",
+             title: "Requires lengthy description?",
+             children: [
+               {value: 0,
+                title: "Go to imarge description template"
+               },
+               {value: 1,
+                title: "Currently ends with Tactile Graphic"}
+             ]
+            }
+          ]
+         }
+       ]
+      }
+    ]
+   }
+ ]
+}
