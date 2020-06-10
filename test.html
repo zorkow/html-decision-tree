@@ -15,13 +15,16 @@
 <hr>
 <address></address>
 <!-- hhmts start -->
-Last modified: Wed Jun 10 21:58:17 BST 2020
+Last modified: Wed Jun 10 22:17:52 BST 2020
 <!-- hhmts end -->
 </body>
 <script>
 let tree = new decisiontree.Tree();
 tree.loadJson();
+setTimeout(() => {
 document.getElementById('status').innerHTML = 'JSON loaded';
+tree.toHTML(document.getElementById('output'));
+}, 500);
 </script>
 
 </html>
