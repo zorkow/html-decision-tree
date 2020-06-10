@@ -1,0 +1,37 @@
+{
+  "name": "Decision-Tree",
+  "version": "0.0.1",
+  "description": "Image Description Decision Tree",
+  "main": "dist/decisiontree.js",
+  "types": "dist/decisiontree.d.ts",
+  "scripts": {
+    "build": "./node_modules/.bin/tsc"
+  },
+  "maintainers": [
+    "Diagram Codesprint <diagram-codesprint@benetech.org>"
+  ],
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diagram-codesprint/2020-Image-Description-Decision-Tree"
+  },
+  "keywords": [
+    "decision tree"
+  ],
+  "homepage": "https://github.com/diagram-codesprint/2020-Image-Description-Decision-Tree",
+  "dependencies": {},
+  "devDependencies": {
+    "ts-loader": "^6.2.0",
+    "tslint": "^5.12.1",
+    "tslint-jsdoc-rules": "^0.2.0",
+    "tslint-unix-formatter": "^0.2.0",
+    "typescript": "^3.*",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist"
+  ]
+}
