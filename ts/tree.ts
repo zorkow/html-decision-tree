@@ -36,8 +36,31 @@ export class Tree {
   }
 
   
+  public toHTML(node: Element = null) {
+    let dfs = new DepthFirst(this, (x: Node) => x.toHtml());
+    // TODO: Visit the tree.
+    dfs.result.forEach(n => node.appendChild(n));
+  }
+  
 }
 
+
+export class DepthFirst {
+
+  public result: any[] = [];
+
+  constructor(tree: Tree, private func: Function) {
+    this.visit(tree.root);
+  }
+
+  private visit(node: Node) {
+    this.result.push(this.func(node));
+    node.children.forEach(x => this.visit(x));
+  }
+  
+}
+  
+let counter = 0;
 
 export class Node {
 
@@ -45,6 +68,7 @@ export class Node {
   public kind: string = '';
   public children: Node[] = [];
   public parent: Node = null;
+  public variable: string = 'dt_variable' + counter++;
   
   constructor(public title: string, public value = 0,
               content: {text: string, value: number}[] = []) {
@@ -79,8 +103,40 @@ export class Node {
     }
     return node;
   }
+
+  public toHtml(): Element {
+    let div = document.createElement('div');
+    div.classList.add('DT_NODE')
+    div.classList.add('DT' + this.kind.toUpperCase())
+    let title = document.createElement('span');
+    title.classList.add('DT_TITLE');
+    title.innerHTML = this.title;
+    div.appendChild(title);
+    this.content.forEach(x => {
+      let content = document.createElement('div');
+      content.classList.add('DT_CONTENT');
+      let radio = document.createElement('input');
+      radio.classList.add('DT_RADIO');
+      radio.type = 'radio';
+      radio.name = this.variable;
+      radio.value = this.value.toString();
+      let label = document.createElement('label');
+      label.classList.add('DT_LABEL');
+      label.innerHTML = x;
+      content.appendChild(radio);
+      content.appendChild(label);
+      div.appendChild(content);
+    });
+    return div;
+  }
   
 }
+
+// let makeElement = function(kind: string, ...rest: string[]) {
+  
+// }
+
+
 
 export class Binary extends Node {
 
@@ -91,6 +147,7 @@ export class Binary extends Node {
   }
 
 }
+
 
 export class Nary extends Node {
   public kind = 'nary'

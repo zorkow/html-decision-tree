@@ -26,10 +26,10 @@
     "title": "Image provides additional essential info?",
     "children": [
       {"value": 0,
-       "content": "Do not describe"},
+       "title": "Do not describe"},
       {"value": 1,
        "type": "binary",
-       "content": "Is there text embedded within the image?",
+       "title": "Is there text embedded within the image?",
        "children": [
          {"value": 1,
           "title": "Attempt OCR or type text"},
