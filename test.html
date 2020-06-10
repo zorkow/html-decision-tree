@@ -2,21 +2,22 @@
 <html> <head>
 <title>Testing the decision tree</title>
 <script src="./dist/decisiontree.js"></script>
+<link rel="stylesheet" href="tree.css">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-<h1>Test</h1>
-<div id="status"></div>
+<div class="content">
+    <header>
+        <h1>Decision Tree</h1>
+    </header>
+    <div class="main-content">
+        <div id="status"></div>
 
-<div id="output"></div>
+        <div id="output"></div>
 
-
-
-<hr>
-<address></address>
-<!-- hhmts start -->
-Last modified: Wed Jun 10 22:17:52 BST 2020
-<!-- hhmts end -->
+    </div>
+</div>
 </body>
 <script>
 let tree = new decisiontree.Tree();
