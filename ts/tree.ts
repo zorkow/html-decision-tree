@@ -30,6 +30,7 @@ export class Tree {
     }
   }
 
+
   public fromJson() {
     this.json = JSON.parse(this.jsonStr);
     this.root = Node.fromJson(this.json);
@@ -59,8 +60,10 @@ export class DepthFirst {
   }
   
 }
-  
+
+
 let counter = 0;
+let labelCounter = 0;
 
 export class Node {
 
@@ -69,6 +72,13 @@ export class Node {
   public children: Node[] = [];
   public parent: Node = null;
   public variable: string = 'dt_variable' + counter++;
+
+  private _next: Element;
+  private _previous: Element;
+  private _div: Element;
+
+  public nextName: string = 'Next';
+  public previousName: string = 'Back';
   
   constructor(public title: string, public value = 0,
               content: {text: string, value: number}[] = []) {
@@ -97,7 +107,7 @@ export class Node {
           node.children = json.children.map(Node.fromJson);
           node.children.forEach(child => child.parent = node);
         }
-        break
+        break;
       default:
         throw Error('Unknown node type.');
     }
@@ -106,31 +116,58 @@ export class Node {
 
   public toHtml(): Element {
     let div = document.createElement('div');
-    div.classList.add('DT_NODE')
-    div.classList.add('DT' + this.kind.toUpperCase())
+    addClass(div, 'NODE', this.kind);
     let title = document.createElement('span');
-    title.classList.add('DT_TITLE');
+    addClass(title, 'TITLE');
     title.innerHTML = this.title;
     div.appendChild(title);
     this.content.forEach(x => {
       let content = document.createElement('div');
-      content.classList.add('DT_CONTENT');
+      addClass(content, 'CONTENT');
       let radio = document.createElement('input');
-      radio.classList.add('DT_RADIO');
+      addClass(radio, 'RADIO');
+      let labelId = 'dt_id_' + labelCounter++;
       radio.type = 'radio';
       radio.name = this.variable;
       radio.value = this.value.toString();
+      radio.setAttribute('aria-labelledby', labelId);
       let label = document.createElement('label');
-      label.classList.add('DT_LABEL');
+      addClass(label, 'LABEL');
+      label.id = labelId;
       label.innerHTML = x;
       content.appendChild(radio);
       content.appendChild(label);
       div.appendChild(content);
     });
+    this._div = div;
+    this.previous();
+    this.next();
     return div;
+  }
+
+  public next() {
+    if (this._next) return;
+    this._next = document.createElement('button');
+    this._next.innerHTML = this.nextName;
+    addClass(this._next, 'NEXT');
+    this._div.appendChild(this._next);
+  }
+  
+  public previous() {
+    if (this._previous || !this.parent) return;
+    this._previous = document.createElement('button');
+    this._previous.innerHTML = this.previousName;
+    addClass(this._previous, 'PREVIOUS');
+    this._div.appendChild(this._previous);
   }
   
 }
+
+let prefix = 'DT_';
+
+let addClass = function(element: Element, ...rest: string[]) {
+  rest.forEach(x => element.classList.add(prefix + x.toUpperCase()));
+};
 
 // let makeElement = function(kind: string, ...rest: string[]) {
   
@@ -158,6 +195,7 @@ export class Nary extends Node {
 export class Leaf extends Node {
   public kind = 'leaf';
   readonly children: Node[] = [];
+  public nextName = 'Restart';
   // TODO: Leaves could get an action.
   
   constructor(title: string, value: number) {
