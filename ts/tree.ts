@@ -37,10 +37,14 @@ export class Tree {
   }
 
   
-  public toHTML(node: Element = null) {
-    let dfs = new DepthFirst(this, (x: Node) => x.toHtml());
+  public toHTML(node: HTMLElement = null) {
+    let dfs = new DepthFirst(this, (x: Node) => x);
     // TODO: Visit the tree.
-    dfs.result.forEach(n => node.appendChild(n));
+    dfs.result.forEach((n: Node) => {
+      node.appendChild(n.toHtml());
+      n.hide();
+    });
+    this.root.show();
   }
   
 }
@@ -58,7 +62,7 @@ export class DepthFirst {
     this.result.push(this.func(node));
     node.children.forEach(x => this.visit(x));
   }
-  
+
 }
 
 
@@ -71,11 +75,11 @@ export class Node {
   public kind: string = '';
   public children: Node[] = [];
   public parent: Node = null;
-  public variable: string = 'dt_variable' + counter++;
+  public variable: string = 'dt_variable_' + counter++;
 
-  private _next: Element;
-  private _previous: Element;
-  private _div: Element;
+  private _next: HTMLElement;
+  private _previous: HTMLElement;
+  private _div: HTMLElement;
 
   public nextName: string = 'Next';
   public previousName: string = 'Back';
@@ -114,7 +118,9 @@ export class Node {
     return node;
   }
 
-  public toHtml(): Element {
+  public radios: HTMLElement[] = [];
+  
+  public toHtml(): HTMLElement {
     let div = document.createElement('div');
     addClass(div, 'NODE', this.kind);
     let title = document.createElement('span');
@@ -131,6 +137,7 @@ export class Node {
       radio.name = this.variable;
       radio.value = this.value.toString();
       radio.setAttribute('aria-labelledby', labelId);
+      this.radios.push(radio);
       let label = document.createElement('label');
       addClass(label, 'LABEL');
       label.id = labelId;
@@ -150,7 +157,22 @@ export class Node {
     this._next = document.createElement('button');
     this._next.innerHTML = this.nextName;
     addClass(this._next, 'NEXT');
+    this._next.addEventListener('click', this.fireNext.bind(this));
     this._div.appendChild(this._next);
+  }
+
+  public fireNext() {
+    console.log('Firing');
+    for (let radio of this.radios) {
+      console.log(radio);
+      if ((radio as any).checked) {
+        let value = (radio as any).value;
+        console.log(value);
+        this.hide();
+        this.children[value].show();
+        return;
+      }
+    }
   }
   
   public previous() {
@@ -160,12 +182,20 @@ export class Node {
     addClass(this._previous, 'PREVIOUS');
     this._div.appendChild(this._previous);
   }
+
+  public show() {
+    this._div.style.visibility = 'visible';
+  }
+  
+  public hide() {
+    this._div.style.visibility = 'hidden';
+  }
   
 }
 
 let prefix = 'DT_';
 
-let addClass = function(element: Element, ...rest: string[]) {
+let addClass = function(element: HTMLElement, ...rest: string[]) {
   rest.forEach(x => element.classList.add(prefix + x.toUpperCase()));
 };
 
