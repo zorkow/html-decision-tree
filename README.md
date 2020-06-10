@@ -27,7 +27,7 @@ https://diagram-codesprint.github.io/2020-Image-Description-Decision-Tree/test.h
 
 ## Wireframes
 
-https://www.figma.com/file/fVmv8UBcOABz23PJz20bfH/DIAGRAM-Decision-Tree?node-id=18%3A624
+https://www.figma.com/file/fVmv8UBcOABz23PJz20bfH/DIAGRAM-Decision-Tree?node-id=0%3A1
 
 ## Prototype
 
