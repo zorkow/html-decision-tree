@@ -12,7 +12,7 @@ title: \w*,
 content: [{
   text: \w*,
   value: 0-9+,
-  }]
+  }],
 children: [node*],
 }
 ```
