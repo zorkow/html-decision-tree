@@ -107,7 +107,7 @@ export class Node {
   public toHtml(): Element {
     let div = document.createElement('div');
     div.classList.add('DT_NODE')
-    div.classList.add('DT' + this.kind.toUpperCase())
+    div.classList.add('DT_' + this.kind.toUpperCase())
     let title = document.createElement('span');
     title.classList.add('DT_TITLE');
     title.innerHTML = this.title;
