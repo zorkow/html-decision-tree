@@ -5,7 +5,7 @@
   "main": "dist/decisiontree.js",
   "types": "dist/decisiontree.d.ts",
   "scripts": {
-    "build": "./node_modules/.bin/tsc"
+    "build": "npx tsc; npx webpack"
   },
   "maintainers": [
     "Diagram Codesprint <diagram-codesprint@benetech.org>"
