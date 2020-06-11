@@ -6,8 +6,8 @@ export class Tree {
   public json: any = null;
   public root: Node = null;
 
-  public loadJson() {
-    let location = window.location.href.replace(/\/.*\.html$/, 'samples/tree2.json');
+  public loadJson(file: string) {
+    let location = file;
     let httpRequest = new XMLHttpRequest();
     httpRequest.onreadystatechange = function() {
       if (httpRequest.readyState === 4) {
@@ -82,7 +82,7 @@ export class Node {
   public tree: Tree;
   public content: Map<number, string> = new Map<number, string>();
   public kind: string = '';
-  public children: Node[] = [];
+  public children: Map<number, Node> = new Map<number, Node>();
   public parent: Node = null;
   public variable: string = 'dt_variable_' + counter++;
   public radioButtons: HTMLElement[] = [];
@@ -102,6 +102,15 @@ export class Node {
     }
   }
 
+  private static parseChildren(node: Node, json: any[]) {
+    if (!json || !json.length) return;
+    for (const child of json) {
+      let childNode = Node.fromJson(child);
+      node.children.set(childNode.value, childNode);
+      childNode.parent = node;
+    }
+  }
+
   static fromJson(json: any): Node {
     let kind = json.type || 'leaf';
     let node: Node = null;
@@ -111,17 +120,11 @@ export class Node {
         break;
       case 'nary':
         node = new Nary(json.title, json.value, json.content || []);
-        if (json.children.length) {
-          node.children = json.children.map(Node.fromJson);
-          node.children.forEach(child => child.parent = node);
-        }
+        Node.parseChildren(node, json.children);
         break;
       case 'binary':
         node = new Binary(json.title, json.value);
-        if (json.children.length) {
-          node.children = json.children.map(Node.fromJson);
-          node.children.forEach(child => child.parent = node);
-        }
+        Node.parseChildren(node, json.children);
         break;
       default:
         throw Error('Unknown node type.');
@@ -190,9 +193,8 @@ export class Node {
     for (let radio of this.radioButtons) {
       if ((radio as any).checked) {
         let value = (radio as any).value;
-        console.log(value);
         this.hide();
-        this.children[value].show();
+        this.children.get(parseInt(value, 10)).show();
         return;
       }
     }
@@ -216,11 +218,11 @@ export class Node {
 
 
   public show() {
-    this.div.style.visibility = 'visible';
+    this.div.style.display = 'block';
   }
 
   public hide() {
-    this.div.style.visibility = 'hidden';
+    this.div.style.display = 'none';
   }
 
 }
@@ -244,7 +246,6 @@ export class Nary extends Node {
 
 export class Leaf extends Node {
   public kind = 'leaf';
-  readonly children: Node[] = [];
   public nextName = 'Restart';
   // TODO: Leaves could get an action.
 
