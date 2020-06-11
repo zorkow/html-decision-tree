@@ -1,6 +1,7 @@
-{"title": "Evaluate the purpose of the image",
+{"content": "Evaluate the purpose of the image",
+ "title": "Decision Tree",
  "type": "nary",
- "content": [
+ "labels": [
    {"text": "Icon",
     "value": 0},
    {"text": "Visual interest only",
@@ -10,45 +11,60 @@
  ],
  "children": [
    {"value": 0,
-    "title": "Prepares student for activity or represents a concept?",
+    "content": "Prepares student for activity or represents a concept?",
+    "title": "Icon",
     "type": "binary",
     "children": [
       {"value": 0,
-       "title": "Describe (Go to image description template)"},
+       "title": "Icon",
+       "content": "Describe (Go to image description template)"
+      },
       {"value": 1,
-       "title": "Do not describe"}
+       "title": "",
+       "content": "Do not describe"
+      }
     ]
    },
    {"value": 1,
-    "title": "Do not describe"},
+    "title": "",
+    "content": "Do not describe"},
    {"value": 2,
     "type": "binary",
-    "title": "Image provides additional essential info?",
+    "title": "",
+    "content": "Image provides additional essential info?",
     "children": [
       {"value": 0,
-       "title": "Do not describe"},
+       "title": "",
+       "content": "Do not describe"},
       {"value": 1,
        "type": "binary",
-       "title": "Is there text embedded within the image?",
+       "title": "",
+       "content": "Is there text embedded within the image?",
        "children": [
          {"value": 1,
-          "title": "Attempt OCR or type text"},
+          "title": "",
+          "content": "Attempt OCR or type text"},
          {"value": 0,
           "type": "binary",
-          "title": "Does student need spatial info from graphic?",
+          "title": "",
+          "content": "Does student need spatial info from graphic?",
           "children": [
             {"value": 0,
-             "title": "Describe (Go to image description template)"
+             "title": "",
+             "content": "Describe (Go to image description template)"
             },
             {"value": 1,
              "type": "binary",
-             "title": "Requires lengthy description?",
+             "title": "",
+             "content": "Requires lengthy description?",
              "children": [
                {"value": 0,
-                "title": "Go to image description template"
+                "title": "",
+                "content": "Go to image description template"
                },
                {"value": 1,
-                "title": "Currently ends with Tactile Graphic"}
+                "title": "",
+                "content": "Currently ends with Tactile Graphic"}
              ]
             }
           ]

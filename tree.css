@@ -12,18 +12,17 @@ body {
     background-color: #fff;
 }
 
-header {
+.DT_TITLE {
     /* box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2); */
     border-bottom: 2px solid #DDDDDD;
     padding: 0;
     margin: 0 0 1rem 0;
-}
-
-h1 {
     font-weight: bold;
     font-size: 1.15rem;
     margin: 0 0 0 1.875rem;
     padding: 0 0 0.75rem;
+    display: block;
+    margin: 0.5rem 0;
 }
 
 .main-content {
@@ -35,12 +34,12 @@ h1 {
     visibility: hidden;
 }
 
-.DT_TITLE {
+.DT_CONTENT {
     display: block;
     margin: 0.5rem 0;
 }
 
-.DT_CONTENT {
+.DT_RADIOBUTTON {
     margin: 0.25rem 0;
 }
 
