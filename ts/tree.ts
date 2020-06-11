@@ -225,7 +225,7 @@ export class Node {
 
   public show() {
     this.div.style.display = 'block';
-    this.div.focus();
+    (this.div.parentNode as HTMLElement).focus();
   }
 
   public hide() {
