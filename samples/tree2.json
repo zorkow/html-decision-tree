@@ -1,5 +1,5 @@
 {"content": "Evaluate the purpose of the image",
- "title": "",
+ "title": "Decision Tree",
  "type": "nary",
  "labels": [
    {"text": "Icon",
@@ -12,11 +12,11 @@
  "children": [
    {"value": 0,
     "content": "Prepares student for activity or represents a concept?",
-    "title": "",
+    "title": "Icon",
     "type": "binary",
     "children": [
       {"value": 0,
-       "title": "",
+       "title": "Icon",
        "content": "Describe (Go to image description template)"
       },
       {"value": 1,
