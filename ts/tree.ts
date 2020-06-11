@@ -93,7 +93,8 @@ export class Node {
   public variable: string = 'dt_variable_' + counter++;
   public radioButtons: HTMLElement[] = [];
   public div: HTMLElement;
-
+  public titleElement: HTMLElement;
+  
   private nextButton: HTMLElement;
   private previousButton: HTMLElement;
 
@@ -141,10 +142,12 @@ export class Node {
   public toHtml(): HTMLElement {
     this.div = document.createElement('div');
     addClass(this.div, 'NODE', this.kind);
-    let title = document.createElement('span');
-    addClass(title, 'TITLE');
-    title.innerHTML = this.title;
-    this.div.appendChild(title);
+    this.titleElement = document.createElement('span');
+    addClass(this.titleElement, 'TITLE');
+    console.log('HERE');
+    this.titleElement.setAttribute('tabindex', '-1');
+    this.titleElement.innerHTML = this.title;
+    this.div.appendChild(this.titleElement);
     this.radios();
     this.buttons();
     return this.div;
@@ -225,11 +228,13 @@ export class Node {
 
   public show() {
     this.div.style.display = 'block';
-    (this.div.parentNode as HTMLElement).focus();
+    this.titleElement.setAttribute('tabindex', '0');
+    this.titleElement.focus();
   }
 
   public hide() {
     this.div.style.display = 'none';
+    this.titleElement.setAttribute('tabindex', '-1');
   }
 
 }
