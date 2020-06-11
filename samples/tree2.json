@@ -45,7 +45,7 @@
              "title": "Requires lengthy description?",
              "children": [
                {"value": 0,
-                "title": "Go to imarge description template"
+                "title": "Go to image description template"
                },
                {"value": 1,
                 "title": "Currently ends with Tactile Graphic"}

@@ -21,7 +21,7 @@
 </body>
 <script>
 let tree = new decisiontree.Tree();
-tree.loadJson();
+tree.loadJson(window.location.href.replace(/\/.*\.html$/, 'samples/tree2.json'));
 setTimeout(() => {
 document.getElementById('status').innerHTML = 'JSON loaded';
 tree.toHTML(document.getElementById('output'));
