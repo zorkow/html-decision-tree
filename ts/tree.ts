@@ -6,27 +6,33 @@ export class Tree {
   public json: any = null;
   public root: Node = null;
 
-  public loadJson(file: string) {
-    let location = file;
-    let httpRequest = new XMLHttpRequest();
-    httpRequest.onreadystatechange = function() {
-      if (httpRequest.readyState === 4) {
-        if (httpRequest.status === 200) {
-          this._loadJson(httpRequest.responseText);
+  public loadJson(url: string) {
+    return new Promise((resolve, reject) => {
+      let httpRequest = new XMLHttpRequest();
+      httpRequest.onreadystatechange = function() {
+        if (httpRequest.readyState === 4) {
+          if (httpRequest.status === 200) {
+            this._loadJson(httpRequest.responseText, resolve, reject);
+          } else {
+            reject(httpRequest.statusText);
+          }
         }
-      }
-    }.bind(this);
-    httpRequest.open('GET', location, true);
-    httpRequest.send();
+      }.bind(this);
+      httpRequest.onerror = function() {
+        reject(httpRequest.statusText);
+      }.bind(this);
+      httpRequest.open('GET', url, true);
+      httpRequest.send();
+    });
   }
 
-  public _loadJson(json: string) {
+  public _loadJson(json: string, resolve: Function, reject: Function) {
     try {
       this.jsonStr = json;
       this.fromJson();
+      resolve('JSON loaded');
     } catch (err) {
-      console.error('Something went wrong!');
-      console.error(err);
+      reject('JSON Parser Error!');
     }
   }
 

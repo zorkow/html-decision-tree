@@ -21,11 +21,13 @@
 </body>
 <script>
 let tree = new decisiontree.Tree();
-tree.loadJson(window.location.href.replace(/\/.*\.html$/, 'samples/tree2.json'));
-setTimeout(() => {
-document.getElementById('status').innerHTML = 'JSON loaded';
+let promise = tree.loadJson(window.location.href.replace(/\/.*\.html$/, 'samples/tree2.json'));
+promise.then((p) => {
+document.getElementById('status').innerHTML = p;
 tree.toHTML(document.getElementById('output'));
-}, 500);
+}).catch((p) =>
+document.getElementById('status').innerHTML = p
+);
 </script>
 
 </html>
