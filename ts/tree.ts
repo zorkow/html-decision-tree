@@ -86,14 +86,14 @@ let labelCounter = 0;
 export class Node {
 
   public tree: Tree;
-  public content: Map<number, string> = new Map<number, string>();
+  public labels: Map<number, string> = new Map<number, string>();
   public kind: string = '';
   public children: Map<number, Node> = new Map<number, Node>();
   public parent: Node = null;
   public variable: string = 'dt_variable_' + counter++;
   public radioButtons: HTMLElement[] = [];
   public div: HTMLElement;
-  public titleElement: HTMLElement;
+  public contentElement: HTMLElement;
   
   private nextButton: HTMLElement;
   private previousButton: HTMLElement;
@@ -102,10 +102,11 @@ export class Node {
   public nextName: string = 'Next';
   public previousName: string = 'Back';
 
-  constructor(public title: string, public value = 0,
-              content: {text: string, value: number}[] = []) {
-    for (let {text: text, value: value} of content) {
-      this.content.set(value, text);
+  constructor(public content: string, public title: string = '',
+              public value = 0,
+              labels: {text: string, value: number}[] = []) {
+    for (let {text: text, value: value} of labels) {
+      this.labels.set(value, text);
     }
   }
 
@@ -123,14 +124,14 @@ export class Node {
     let node: Node = null;
     switch (kind) {
       case 'leaf':
-        node = new Leaf(json.title, json.value);
+        node = new Leaf(json.content, json.title, json.value);
         break;
       case 'nary':
-        node = new Nary(json.title, json.value, json.content || []);
+        node = new Nary(json.content, json.title, json.value, json.labels || []);
         Node.parseChildren(node, json.children);
         break;
       case 'binary':
-        node = new Binary(json.title, json.value);
+        node = new Binary(json.content, json.title, json.value);
         Node.parseChildren(node, json.children);
         break;
       default:
@@ -142,12 +143,11 @@ export class Node {
   public toHtml(): HTMLElement {
     this.div = document.createElement('div');
     addClass(this.div, 'NODE', this.kind);
-    this.titleElement = document.createElement('span');
-    addClass(this.titleElement, 'TITLE');
-    console.log('HERE');
-    this.titleElement.setAttribute('tabindex', '-1');
-    this.titleElement.innerHTML = this.title;
-    this.div.appendChild(this.titleElement);
+    this.contentElement = document.createElement('span');
+    addClass(this.contentElement, 'TITLE');
+    this.contentElement.setAttribute('tabindex', '-1');
+    this.contentElement.innerHTML = this.content;
+    this.div.appendChild(this.contentElement);
     this.radios();
     this.buttons();
     return this.div;
@@ -155,7 +155,7 @@ export class Node {
 
 
   protected radios() {
-    for (const [key, value] of this.content) {
+    for (const [key, value] of this.labels) {
       let content = document.createElement('div');
       addClass(content, 'CONTENT');
       let radio = document.createElement('input');
@@ -228,13 +228,13 @@ export class Node {
 
   public show() {
     this.div.style.display = 'block';
-    this.titleElement.setAttribute('tabindex', '0');
-    this.titleElement.focus();
+    this.contentElement.setAttribute('tabindex', '0');
+    this.contentElement.focus();
   }
 
   public hide() {
     this.div.style.display = 'none';
-    this.titleElement.setAttribute('tabindex', '-1');
+    this.contentElement.setAttribute('tabindex', '-1');
   }
 
 }
@@ -243,8 +243,8 @@ export class Binary extends Node {
 
   public kind = 'binary'
 
-  constructor(public title: string, public value = 0) {
-    super(title, value, [{text: 'Yes', value: 1}, {text: 'No', value: 0}]);
+  constructor(public content: string, public title: string, public value = 0) {
+    super(content, title, value, [{text: 'Yes', value: 1}, {text: 'No', value: 0}]);
   }
 
 }
@@ -261,8 +261,8 @@ export class Leaf extends Node {
   public nextName = 'Restart';
   // TODO: Leaves could get an action.
 
-  constructor(title: string, value: number) {
-    super(title, value);
+  constructor(content: string, title: string, value: number) {
+    super(content, title, value);
   }
 
   protected fireNext() {
