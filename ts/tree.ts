@@ -166,7 +166,7 @@ export class Node {
     let node: Node = null;
     switch (kind) {
       case 'leaf':
-        node = new Leaf(json.content, json.title, json.value);
+        node = new Leaf(json.content, json.title, json.value, json.action);
         break;
       case 'nary':
         node = new Nary(json.content, json.title, json.value, json.labels || []);
@@ -334,9 +334,21 @@ export class Leaf extends Node {
     addClass(this.summaryButton, 'SUMMARY');
     this.summaryButton.addEventListener('click', this.fireSummary.bind(this));
     this.buttonsElement.appendChild(this.summaryButton);
-    
+    console.log(this.action);
+    if (this.action) {
+      this.actionButton = document.createElement('button');
+      this.actionButton.innerHTML = 'Go';
+      addClass(this.actionButton, 'ACTION');
+      this.actionButton.addEventListener('click', this.fireAction.bind(this));
+      this.buttonsElement.appendChild(this.actionButton);
+    }
   }
 
+  protected fireAction() {
+    console.log('Firing!');
+    window.open(this.action, '_blank');
+  }
+  
   protected fireSummary() {
     this.tree.summary(this);
   }
