@@ -238,6 +238,7 @@ export class Node {
   public show() {
     this.div.style.display = 'block';
     this.contentElement.setAttribute('tabindex', '0');
+    this.titleElement.setAttribute('aria-live', 'polite');
     this.titleElement.setAttribute('tabindex', '0');
     this.titleElement.focus();
   }
@@ -245,6 +246,7 @@ export class Node {
   public hide() {
     this.div.style.display = 'none';
     this.contentElement.setAttribute('tabindex', '-1');
+    this.titleElement.removeAttribute('aria-live');
     this.titleElement.setAttribute('tabindex', '-1');
   }
 
