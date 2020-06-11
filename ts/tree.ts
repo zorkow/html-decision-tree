@@ -93,6 +93,7 @@ export class Node {
   public variable: string = 'dt_variable_' + counter++;
   public radioButtons: HTMLElement[] = [];
   public div: HTMLElement;
+  public titleElement: HTMLElement;
   public contentElement: HTMLElement;
   
   private nextButton: HTMLElement;
@@ -143,8 +144,15 @@ export class Node {
   public toHtml(): HTMLElement {
     this.div = document.createElement('div');
     addClass(this.div, 'NODE', this.kind);
+    // Actual title element
+    this.titleElement = document.createElement('span');
+    addClass(this.titleElement, 'TITLE');
+    this.titleElement.setAttribute('tabindex', '-1');
+    this.titleElement.innerHTML = this.title;
+    this.div.appendChild(this.titleElement);
+    // Actual content element
     this.contentElement = document.createElement('span');
-    addClass(this.contentElement, 'TITLE');
+    addClass(this.contentElement, 'CONTENT');
     this.contentElement.setAttribute('tabindex', '-1');
     this.contentElement.innerHTML = this.content;
     this.div.appendChild(this.contentElement);
@@ -157,7 +165,7 @@ export class Node {
   protected radios() {
     for (const [key, value] of this.labels) {
       let content = document.createElement('div');
-      addClass(content, 'CONTENT');
+      addClass(content, 'RADIOBUTTON');
       let radio = document.createElement('input');
       addClass(radio, 'RADIO');
       let labelId = 'dt_id_' + labelCounter++;
@@ -226,15 +234,18 @@ export class Node {
   }
 
 
+  // TODO: This is probably overkill.
   public show() {
     this.div.style.display = 'block';
     this.contentElement.setAttribute('tabindex', '0');
-    this.contentElement.focus();
+    this.titleElement.setAttribute('tabindex', '0');
+    this.titleElement.focus();
   }
 
   public hide() {
     this.div.style.display = 'none';
     this.contentElement.setAttribute('tabindex', '-1');
+    this.titleElement.setAttribute('tabindex', '-1');
   }
 
 }
