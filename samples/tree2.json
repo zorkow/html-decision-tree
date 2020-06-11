@@ -1,77 +1,86 @@
 {"content": "Evaluate the purpose of the image",
- "title": "Decision Tree",
- "type": "nary",
- "labels": [
-   {"text": "Icon",
-    "value": 0},
-   {"text": "Visual interest only",
-    "value": 1},
-   {"text": "Provides information",
-    "value": 2}
- ],
- "children": [
-   {"value": 0,
-    "content": "Prepares student for activity or represents a concept?",
-    "title": "Icon",
-    "type": "binary",
-    "children": [
-      {"value": 0,
-       "title": "Icon",
-       "content": "Describe (Go to image description template)"
-      },
-      {"value": 1,
-       "title": "",
-       "content": "Do not describe"
-      }
-    ]
-   },
-   {"value": 1,
-    "title": "",
-    "content": "Do not describe"},
-   {"value": 2,
-    "type": "binary",
-    "title": "",
-    "content": "Image provides additional essential info?",
-    "children": [
-      {"value": 0,
-       "title": "",
-       "content": "Do not describe"},
-      {"value": 1,
-       "type": "binary",
-       "title": "",
-       "content": "Is there text embedded within the image?",
-       "children": [
-         {"value": 1,
-          "title": "",
-          "content": "Attempt OCR or type text"},
-         {"value": 0,
-          "type": "binary",
-          "title": "",
-          "content": "Does student need spatial info from graphic?",
-          "children": [
-            {"value": 0,
-             "title": "",
-             "content": "Describe (Go to image description template)"
-            },
-            {"value": 1,
-             "type": "binary",
-             "title": "",
-             "content": "Requires lengthy description?",
-             "children": [
-               {"value": 0,
-                "title": "",
-                "content": "Go to image description template"
-               },
-               {"value": 1,
-                "title": "",
-                "content": "Currently ends with Tactile Graphic"}
-             ]
-            }
-          ]
-         }
-       ]
-      }
-    ]
-   }
- ]
-}
+  "title": "Decision Tree",
+  "type": "nary",
+  "labels": [
+    {"text": "Icon",
+     "value": 0},
+    {"text": "Visual interest only",
+     "value": 1},
+    {"text": "Provides information",
+     "value": 2}
+  ],
+  "children": [
+    {"value": 0,
+     "content": "Prepares student for activity or represents a concept?",
+     "title": "Icon",
+     "type": "binary",
+     "children": [
+       {"value": 0,
+        "title": "Icon",
+        "content": "Do not describe"
+       },
+       {"value": 1,
+        "title": "icon",
+        "content": "describe the image, select the go button for reasources on providing image descriptions",
+        "action": "http://diagramcenter.org/making-images-accessible.html#descriptiontemplates"
+       }
+     ]
+    },
+    {"value": 1,
+     "title": "Visual interest only",
+     "content": "Do not describe"},
+    {"value": 2,
+     "type": "binary",
+     "title": "Provides information",
+     "content": "Image provides additional essential info?",
+     "children": [
+       {"value": 0,
+        "title": "Provides information",
+        "content": "Do not describe"},
+       {"value": 1,
+        "type": "binary",
+        "title": "Provides information",
+        "content": "Is there text embedded within the image?",
+        "children": [
+          {"value": 1,
+           "title": "Provides information with embedded text",
+           "content": "Attempt OCR or type the text"},
+          {"value": 0,
+           "type": "binary",
+           "title": "Provides information with no embedded text",
+           "content": "Does student need spatial info from graphic?",
+           "children": [
+             {"value": 0,
+              "title": "Provides information with no embedded text",
+              "content": "describe the image, select the go button for reasources on providing image descriptions",
+              "action": "http://diagramcenter.org/making-images-accessible.html#descriptiontemplates"
+             },
+             {"value": 1,
+              "type": "binary",
+              "title": "Provides information with no embedded text",
+              "content": "Requires lengthy description?",
+              "children": [
+                {"value": 0,
+                 "title": "image requires a lengthy description",
+                 "content": "describe the image, select the go button for reasources on providing image descriptions",
+              "action": "http://diagramcenter.org/making-images-accessible.html#descriptiontemplates"
+                },
+                {"value": 1,
+                 "type": "binary",
+                 "title": "image does not require a lengthy description",
+                 "content": "Does the image convey an object(s) with 3-dimensional characteristics?",
+                 {"value": 0,
+                 "title": "image does not convery an object with 3-dimesional characteristics",
+                 "content": "provide a 2 or 2.5-dimesnional tactile graphic"
+                } 
+                }
+              ]
+             }
+           ]
+          }
+        ]
+       }
+     ]
+    }
+  ]
+ }
