@@ -228,12 +228,14 @@ export class Node {
 
   public show() {
     this.div.style.display = 'block';
+    this.titleElement.setAttribute('aria-live', 'polite');
     this.titleElement.setAttribute('tabindex', '0');
     this.titleElement.focus();
   }
 
   public hide() {
     this.div.style.display = 'none';
+    this.titleElement.removeAttribute('aria-live');
     this.titleElement.setAttribute('tabindex', '-1');
   }
 
