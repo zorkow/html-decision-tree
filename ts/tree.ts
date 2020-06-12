@@ -105,14 +105,26 @@ export class Tree {
 }
 
 
+/**
+ * A Depth First Visitor for the Tree.
+ */
 export class DepthFirst {
 
   public result: any[] = [];
 
+  /**
+   * @constructor
+   * @param {Tree} tree The tree to visit.
+   * @param {Function} func The visiting method.
+   */
   constructor(tree: Tree, private func: Function) {
     this.visit(tree.root);
   }
 
+  /**
+   * DF walking of the tree.
+   * @param {Node} node The current node.
+   */
   private visit(node: Node) {
     this.result.push(this.func(node));
     node.children.forEach(x => this.visit(x));
@@ -121,17 +133,19 @@ export class DepthFirst {
 }
 
 
-let counter = 0;
-let labelCounter = 0;
-
 export abstract class Node {
+
+  static counter = 0;
+  static labelCounter = 0;
+
+
 
   public kind: string = '';
   public tree: Tree;
   public labels: Map<number, string> = new Map<number, string>();
   public children: Map<number, Node> = new Map<number, Node>();
   public parent: Node = null;
-  public variable: string = 'dt_variable_' + counter++;
+  public variable: string = 'dt_variable_' + Node.counter++;
   public card: Card;
   public radioButtons: HTMLElement[] = [];
 
@@ -199,13 +213,12 @@ export abstract class Node {
       let content = Util.makeDiv('RADIOBUTTON');
       let radio = document.createElement('input');
       Util.addClass(radio, 'RADIO');
-      let radioId = 'dt_id_' + labelCounter++;
-      let labelId = 'dt_id_' + labelCounter++;
+      let radioId = 'dt_id_' + Node.labelCounter++;
+      let labelId = 'dt_id_' + Node.labelCounter++;
       radio.type = 'radio';
       radio.id = radioId;
       radio.name = this.variable;
       radio.value = key.toString();
-      // radio.setAttribute('aria-labelledby', labelId);
       this.radioButtons.push(radio);
       let label = document.createElement('label');
       Util.addClass(label, 'LABEL');
