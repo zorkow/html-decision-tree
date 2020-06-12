@@ -3,11 +3,11 @@
   "content": "Outlook",
   "type": "nary",
   "labels": [
-    {"text": "Sunny"
+    {"text": "Sunny",
      "value": 0},
-    {"text": "Overcast"
+    {"text": "Overcast",
      "value": 1},
-    {"text": "Rain"
+    {"text": "Rain",
      "value": 2}
   ],
   "children": [
@@ -23,12 +23,12 @@
      ],
      "children": [
        {"value": 1,
-        "title": "Dry"
+        "title": "Dry",
         "content": "Yes"
        },
        {"value": 0,
-        "title": "Humid"
-        "content": "Dark clouds in the Sky?"
+        "title": "Humid",
+        "content": "Dark clouds in the Sky?",
         "type": "binary",
         "children": [
           {"value": 0,
