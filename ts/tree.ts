@@ -8,6 +8,10 @@
 import Util from './util';
 
 
+
+/**
+ * Basic tree class
+ */
 export class Tree {
 
   public jsonStr: string = '';
@@ -16,6 +20,11 @@ export class Tree {
   public rootElement: HTMLElement;
   public summaryElement: Summary = new Summary();
 
+
+  /**
+   * 
+   * @return Promise
+   */
   public loadJson(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
       let httpRequest = new XMLHttpRequest();
@@ -218,8 +227,6 @@ export abstract class Node {
     }
   }
 
-
-  // TODO: This is probably overkill.
   public show() {
     this.card.show();
   }

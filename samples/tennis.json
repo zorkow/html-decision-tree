@@ -24,20 +24,20 @@
      "children": [
        {"value": 1,
         "title": "Dry",
-        "content": "Yes"
+        "content": "Let's play"
        },
        {"value": 0,
         "title": "Humid",
         "content": "Dark clouds in the Sky?",
         "type": "binary",
         "children": [
-          {"value": 0,
-           "title": "looks like rain",
-           "content": "No"
-          },
           {"value": 1,
+           "title": "looks like rain",
+           "content": "Let's play some other day"
+          },
+          {"value": 0,
            "title": "Blue sky",
-           "content": "Yes"
+           "content": "Let's play"
           }
         ]
        }
@@ -45,7 +45,7 @@
     },
     {"value": 1,
      "title": "Outlook: Overcast",
-     "content": "Yes"
+     "content": "Let's play"
     },
     {"value": 2,
      "title": "Outlook: Rain",
@@ -60,10 +60,10 @@
      "children": [
        {"value": 0,
         "title": "Strong wind",
-        "content": "No"},
+        "content": "Let's play some other day"},
        {"value": 1,
         "title": "Weak wind",
-        "content": "Yes"}
+        "content": "Let's play"}
      ]
     }
   ]
