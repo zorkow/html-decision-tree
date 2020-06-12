@@ -1,6 +1,6 @@
 {
   "name": "html-decision-tree",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Image Description Decision Tree",
   "main": "dist/decisiontree.js",
   "types": "dist/decisiontree.d.ts",
@@ -37,6 +37,7 @@
     "LICENSE",
     "README.md",
     "dist",
-    "samples"
+    "samples",
+    "styles"
   ]
 }
