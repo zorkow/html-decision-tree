@@ -177,8 +177,26 @@ export abstract class Node {
    */
   protected static labelCounter = 0;
 
+  /**
+   * The type of node.
+   */
   public kind: string = '';
+
+  /**
+   * The tree it is attached to.
+   */
   public tree: Tree;
+
+  /**
+   * Name for the next button.
+   */
+  public nextName: string = 'Next';
+
+  /**
+   * Name for the back button.
+   */
+  public previousName: string = 'Back';
+
   public labels: Map<number, string> = new Map<number, string>();
   public children: Map<number, Node> = new Map<number, Node>();
   public parent: Node = null;
@@ -186,9 +204,11 @@ export abstract class Node {
   public card: Card;
   public radioButtons: HTMLElement[] = [];
 
-  public nextName: string = 'Next';
-  public previousName: string = 'Back';
-
+  /**
+   * @constructor
+   * @param {Tree} tree The tree to visit.
+   * @param {Function} func The visiting method.
+   */
   constructor(public content: string, public title: string = '',
               public value = 0,
               labels: {text: string, value: number}[] = []) {
@@ -209,7 +229,12 @@ export abstract class Node {
     }
   }
 
-  static fromJson(json: any): Node {
+  /**
+   * Parses the JSON format of a node.
+   * @param {JSON} josn The input JSON.
+   * @return {Node} The newly parsed node.
+   */
+  public static fromJson(json: any): Node {
     let kind = json.type || 'leaf';
     let node: Node = null;
     switch (kind) {
@@ -217,7 +242,8 @@ export abstract class Node {
         node = new Leaf(json.content, json.title, json.value, json.action);
         break;
       case 'nary':
-        node = new Nary(json.content, json.title, json.value, json.labels || []);
+        node = new Nary(json.content, json.title,
+                        json.value, json.labels || []);
         Node.parseChildren(node, json.children);
         break;
       case 'binary':
@@ -230,6 +256,9 @@ export abstract class Node {
     return node;
   }
 
+  /**
+   * @return {HTMLElement} The HTML element of that node.
+   */
   public toHtml(): HTMLElement {
     Util.addClass(this.card.div, this.kind);
     // Actual title element
@@ -244,7 +273,9 @@ export abstract class Node {
     return this.card.div;
   }
 
-
+  /**
+   * Adds radio buttons to the card.
+   */
   protected radios() {
     for (const [key, value] of this.labels) {
       let content = Util.makeNode('div', 'RADIOBUTTON');
@@ -268,6 +299,9 @@ export abstract class Node {
     }
   }
 
+  /**
+   * Adds buttons to the card.
+   */
   protected buttons() {
     if (this.parent) {
       Util.makeButton(
@@ -276,6 +310,9 @@ export abstract class Node {
     Util.makeButton(this.nextName, this.fireNext.bind(this), this.card.buttons, 'NEXT');
   }
 
+  /**
+   * Action on next button.
+   */
   protected fireNext() {
     for (let radio of this.radioButtons) {
       if ((radio as any).checked) {
@@ -289,6 +326,9 @@ export abstract class Node {
     }
   }
 
+  /**
+   * Action on previous button.
+   */
   protected firePrevious() {
     if (this.parent) {
       this.hide();
@@ -296,22 +336,33 @@ export abstract class Node {
     }
   }
 
+  /**
+   * Show the node.
+   */
   public show() {
     this.card.show();
   }
 
+  /**
+   * Hide the node.
+   */
   public hide() {
     this.card.hide();
   }
 
 }
 
+
+/**
+ * Binary nodes.
+ */
 export class Binary extends Node {
 
   /**
    * @override
    */
   public kind = 'binary';
+
 
   constructor(public content: string, public title: string, public value = 0) {
     super(content, title, value,
@@ -321,24 +372,53 @@ export class Binary extends Node {
 }
 
 
+/**
+ * Multiply branching nodes.
+ */
 export class Nary extends Node {
-  public kind = 'nary'
+
+  /**
+   * @override
+   */
+  public kind = 'nary';
 
 }
 
 
+/**
+ * Leaf nodes.
+ */
 export class Leaf extends Node {
+
+  /**
+   * @override
+   */
   public kind = 'leaf';
+
+  /**
+   * @override
+   */
   public nextName = 'Restart';
+
+  /**
+   * Summary button.
+   */
   public summaryButton: HTMLElement;
+
+  /**
+   * Action or Go button.
+   */
   public actionButton: HTMLElement;
 
+  
   constructor(content: string, title: string, value: number,
               public action: string = '') {
     super(content, title, value);
   }
 
-
+  /**
+   * @override
+   */
   protected buttons() {
     super.buttons();
     this.summaryButton = Util.makeButton(
@@ -350,14 +430,23 @@ export class Leaf extends Node {
     }
   }
 
+  /**
+   * Action on go button. Fires up a new tab.
+   */
   protected fireAction() {
     window.open(this.action, '_blank');
   }
 
+  /**
+   * Action on summary button.
+   */
   protected fireSummary() {
     this.tree.summary(this);
   }
 
+  /**
+   * @override
+   */
   protected fireNext() {
     this.hide();
     this.tree.root.show();
@@ -367,10 +456,21 @@ export class Leaf extends Node {
 }
 
 
+/**
+ * Summary node.
+ */
 export class Summary extends Node {
 
+  /**
+   * @override
+   */
   public kind = 'summary';
+
+  /**
+   * @override
+   */
   public nextName = 'Restart';
+
   public summaryElement = Util.makeNode('div', 'SUMMARY');
   
   constructor() {
@@ -378,12 +478,18 @@ export class Summary extends Node {
     this.card.content.appendChild(this.summaryElement);
   }
 
+  /**
+   * @override
+   */
   protected fireNext() {
     this.hide();
     this.tree.root.show();
     this.tree.history = [];
   }
 
+  /**
+   * @override
+   */
   public show() {
     super.show();
     this.compileSummary();
@@ -413,6 +519,10 @@ export class Summary extends Node {
 
 }
 
+
+/**
+ * Class that holds the HTML elements of the actually displayed card.
+ */
 export class Card {
 
   public div: HTMLElement = Util.makeNode('div', 'NODE');
@@ -428,6 +538,9 @@ export class Card {
     this.div.appendChild(this.buttons);
   }
 
+  /**
+   * Show the card.
+   */
   public show() {
     this.div.style.display = 'block';
     this.title.setAttribute('aria-live', 'polite');
@@ -436,6 +549,9 @@ export class Card {
     this.title.focus();
   }
 
+  /**
+   * Hide the card.
+   */
   public hide() {
     this.div.style.display = 'none';
     this.title.removeAttribute('aria-live');
