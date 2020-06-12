@@ -8,7 +8,6 @@
 import Util from './util';
 
 
-
 /**
  * Basic tree class
  */
@@ -22,10 +21,37 @@ export class Tree {
 
 
   /**
+   * Creator pattern for the tree.
+   * @param {string} url The data URL for loading JSON.
+   * @param {HTMLElement} result The node to attach the tree to.
+   * @param {HTMLElement=} error The node to attach error output. O/w errors are
+   *     thrown.
+   */
+  public static create(url: string, result: HTMLElement, error?: HTMLElement) {
+    let tree = new Tree();
+    let promise = tree.loadJson(url);
+    promise.then((p) => {
+      if (error) {
+        error.innerHTML = p;
+        error.style.display = 'hide';
+      }
+      tree.toHTML(result);
+    }).catch((p) => {
+      if (!error) {
+        throw error;
+      }
+      error.innerHTML = p;
+      error.style.display = 'block';
+      error.style.visibility = 'visible';
+    });
+  }
+
+
+  /**
    * Loads Json data from a URL.
    * @return Promise
    */
-  public loadJson(url: string): Promise<void> {
+  public loadJson(url: string): Promise<string> {
     return new Promise((resolve, reject) => {
       let httpRequest = new XMLHttpRequest();
       httpRequest.onreadystatechange = function() {
@@ -110,6 +136,9 @@ export class Tree {
  */
 export class DepthFirst {
 
+  /**
+   * The results from the search.
+   */
   public result: any[] = [];
 
   /**
@@ -133,12 +162,20 @@ export class DepthFirst {
 }
 
 
+/**
+ * Abstract node class
+ */
 export abstract class Node {
 
-  static counter = 0;
-  static labelCounter = 0;
+  /**
+   * Counter for variables..
+   */
+  protected static counter = 0;
 
-
+  /**
+   * Counter for ids.
+   */
+  protected static labelCounter = 0;
 
   public kind: string = '';
   public tree: Tree;
