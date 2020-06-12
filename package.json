@@ -1,5 +1,5 @@
 {
-  "name": "Decision-Tree",
+  "name": "html-decision-tree",
   "version": "0.0.1",
   "description": "Image Description Decision Tree",
   "main": "dist/decisiontree.js",

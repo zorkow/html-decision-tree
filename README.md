@@ -16,6 +16,12 @@ npm run-script build
 This builds the `decisiontree.js` library in `dist`.
 
 
+Or simply install the package using 
+
+``` Bash
+npm install html-decision-tree
+```
+
 ## Simple Example
 
 Here is a very simple decision tree for deciding if you should play tennis:
