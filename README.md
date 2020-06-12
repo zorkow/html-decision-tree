@@ -1,5 +1,28 @@
 # 2020-Image-Description-Decision-Tree
 
+This is a generic library for building a simple web-based decision trees UI.
+Data is provided in JSON format, which is then displayed on a website.
+
+
+## Installing and Building
+
+The code is in Typescript. After cloning the repository, just type
+
+``` Bash
+npm install
+npm run-script build
+```
+
+This builds the `decisiontree.js` library in `dist`.
+
+
+## Simple Example
+
+Here is a very simple decision tree for deciding if you should play tennis:
+
+https://diagram-codesprint.github.io/2020-Image-Description-Decision-Tree/tennis.html
+
+
 ## JSON Format
 
 Current node format in some pseudo grammar:
@@ -9,7 +32,8 @@ Current node format in some pseudo grammar:
 type: binary|nary|null,
 value: 0-9+,
 title: \w*,
-content: [{
+content: \w*,
+labels: [{
   text: \w*,
   value: 0-9+,
   }],
@@ -21,14 +45,18 @@ The idea is nary nodes have content (that is the description on the radio
 button) which is linked via the value to the children . Binary nodes have
 default description content.
 
-## HTML Demo View
+## Development and Image Description Decision Tree
+
+The decision tree was developed for the following project:
+
+### HTML Demo View of the Image Description Decision Tree
 
 https://diagram-codesprint.github.io/2020-Image-Description-Decision-Tree/test.html
 
-## Wireframes
+### Wireframes
 
 https://www.figma.com/file/fVmv8UBcOABz23PJz20bfH/DIAGRAM-Decision-Tree?node-id=0%3A1
 
-## Prototype
+### Prototype
 
 https://www.figma.com/proto/fVmv8UBcOABz23PJz20bfH/DIAGRAM-Decision-Tree?node-id=18%3A624
