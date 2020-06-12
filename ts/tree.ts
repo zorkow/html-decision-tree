@@ -118,15 +118,15 @@ let labelCounter = 0;
 
 export abstract class Node {
 
+  public kind: string = '';
   public tree: Tree;
   public labels: Map<number, string> = new Map<number, string>();
-  public kind: string = '';
   public children: Map<number, Node> = new Map<number, Node>();
   public parent: Node = null;
   public variable: string = 'dt_variable_' + counter++;
   public card: Card;
   public radioButtons: HTMLElement[] = [];
-  
+
   public nextName: string = 'Next';
   public previousName: string = 'Back';
 
@@ -140,7 +140,9 @@ export abstract class Node {
   }
 
   private static parseChildren(node: Node, json: any[]) {
-    if (!json || !json.length) return;
+    if (!json || !json.length) {
+      return;
+    }
     for (const child of json) {
       let childNode = Node.fromJson(child);
       node.children.set(childNode.value, childNode);
@@ -297,11 +299,11 @@ export class Leaf extends Node {
     console.log('Firing!');
     window.open(this.action, '_blank');
   }
-  
+
   protected fireSummary() {
     this.tree.summary(this);
   }
-  
+
   protected fireNext() {
     this.hide();
     this.tree.root.show();
@@ -337,7 +339,6 @@ export class Card {
     this.content.setAttribute('tabindex', '0');
     this.title.setAttribute('aria-live', 'polite');
     this.title.setAttribute('tabindex', '0');
-    // this.titleElement.focus();
   }
 
   public hide() {
@@ -346,5 +347,5 @@ export class Card {
     this.title.removeAttribute('aria-live');
     this.title.setAttribute('tabindex', '-1');
   }
-  
+
 }
