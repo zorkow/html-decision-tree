@@ -22,7 +22,7 @@ export class Tree {
 
 
   /**
-   * 
+   * Loads Json data from a URL.
    * @return Promise
    */
   public loadJson(url: string): Promise<void> {
@@ -45,7 +45,14 @@ export class Tree {
     });
   }
 
-  public _loadJson(json: string, resolve: Function, reject: Function) {
+
+  /**
+   * Receives loaded json and parses it into the Tree structure.
+   * @param {string} json The JSON string.
+   * @param {Function} resolve Promise resolution.
+   * @param {Function} reject Promise rejection.
+   */
+  protected _loadJson(json: string, resolve: Function, reject: Function) {
     try {
       this.jsonStr = json;
       this.fromJson();
@@ -56,6 +63,9 @@ export class Tree {
   }
 
 
+  /**
+   * Parses the JSON.
+   */
   public fromJson() {
     this.root = Node.fromJson(JSON.parse(this.jsonStr));
     let dfs = new DepthFirst(this, (x: Node) => x);
@@ -65,7 +75,11 @@ export class Tree {
   }
 
 
-  public toHTML(node: HTMLElement = null) {
+  /**
+   * Attaches the tree DOM to an existing node.
+   * @param {HTMLElement} node The DOM node.
+   */
+  public toHTML(node: HTMLElement) {
     this.rootElement = node;
     let dfs = new DepthFirst(this, (x: Node) => x);
     dfs.result.forEach((n: Node) => {
@@ -77,6 +91,11 @@ export class Tree {
     this.root.show();
   }
 
+
+  /**
+   * Generate a summary of the decision path.
+   * @param {Node} node The leaf node.
+   */
   public summary(node: Node) {
     node.hide();
     this.summaryElement.parent = node;
@@ -355,23 +374,23 @@ export class Card {
     this.div.appendChild(this.title);
     this.title.setAttribute('tabindex', '-1');
     this.div.appendChild(this.content);
-    // this.content.setAttribute('tabindex', '-1');
+    this.content.setAttribute('tabindex', '-1');
     this.div.appendChild(this.buttons);
   }
 
   public show() {
     this.div.style.display = 'block';
-    // this.content.setAttribute('tabindex', '0');
     this.title.setAttribute('aria-live', 'polite');
+    this.content.setAttribute('tabindex', '0');
+    this.title.setAttribute('tabindex', '0');
     this.title.focus();
-    // this.title.setAttribute('tabindex', '0');
   }
 
   public hide() {
     this.div.style.display = 'none';
-    // this.content.setAttribute('tabindex', '-1');
     this.title.removeAttribute('aria-live');
-    // this.title.setAttribute('tabindex', '-1');
+    this.title.setAttribute('tabindex', '-1');
+    this.content.setAttribute('tabindex', '-1');
   }
 
 }
