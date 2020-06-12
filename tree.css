@@ -22,6 +22,7 @@ body {
     padding: 0 0 0.75rem;
     display: block;
     margin: 0.5rem 0;
+    color: #000;
 }
 
 .DT_TITLE:after {
@@ -84,10 +85,12 @@ body {
 
 .DT_QUESTION {
     float: left;
+    color: #000;
 }
 
 .DT_ANSWER {
     float: right;
+    color: #000;
 }
 
 @media only screen and (min-width: 660px) {
