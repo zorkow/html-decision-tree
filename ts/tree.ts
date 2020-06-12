@@ -1,15 +1,16 @@
 // Initial tree
+import Util from './util';
+
 
 export class Tree {
 
   public jsonStr: string = '';
-  public json: any = null;
   public root: Node = null;
   public history: number[] = [];
   public rootElement: HTMLElement;
   public summaryElement: HTMLElement;
 
-  public loadJson(url: string) {
+  public loadJson(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
       let httpRequest = new XMLHttpRequest();
       httpRequest.onreadystatechange = function() {
@@ -41,8 +42,7 @@ export class Tree {
 
 
   public fromJson() {
-    this.json = JSON.parse(this.jsonStr);
-    this.root = Node.fromJson(this.json);
+    this.root = Node.fromJson(JSON.parse(this.jsonStr));
     let dfs = new DepthFirst(this, (x: Node) => x);
     dfs.result.forEach(n => n.tree = this);
   }
@@ -74,10 +74,10 @@ export class Tree {
 
   private printSummary(summary: [string, string][]) {
     this.summaryElement = document.createElement('div');
-    addClass(this.summaryElement, 'NODE', 'SUMMARY');
+    Util.addClass(this.summaryElement, 'NODE', 'SUMMARY');
     this.rootElement.appendChild(this.summaryElement);
     let title = document.createElement('span');
-    addClass(title, 'TITLE');
+    Util.addClass(title, 'TITLE');
     title.setAttribute('tabindex', '-1');
     title.innerHTML = 'Summary';
     this.summaryElement.appendChild(title);
@@ -113,17 +113,10 @@ export class DepthFirst {
 }
 
 
-let prefix = 'DT_';
-
-let addClass = function(element: HTMLElement, ...rest: string[]) {
-  rest.forEach(x => element.classList.add(prefix + x.toUpperCase()));
-};
-
-
 let counter = 0;
 let labelCounter = 0;
 
-export class Node {
+export abstract class Node {
 
   public tree: Tree;
   public labels: Map<number, string> = new Map<number, string>();
@@ -137,8 +130,8 @@ export class Node {
   public contentElement: HTMLElement;
   public buttonsElement: HTMLElement;
   
-  private nextButton: HTMLElement;
-  private previousButton: HTMLElement;
+  // private nextButton: HTMLElement;
+  // private previousButton: HTMLElement;
 
 
   public nextName: string = 'Next';
@@ -184,16 +177,16 @@ export class Node {
 
   public toHtml(): HTMLElement {
     this.div = document.createElement('div');
-    addClass(this.div, 'NODE', this.kind);
+    Util.addClass(this.div, 'NODE', this.kind);
     // Actual title element
     this.titleElement = document.createElement('span');
-    addClass(this.titleElement, 'TITLE');
+    Util.addClass(this.titleElement, 'TITLE');
     this.titleElement.setAttribute('tabindex', '-1');
     this.titleElement.innerHTML = this.title;
     this.div.appendChild(this.titleElement);
     // Actual content element
     this.contentElement = document.createElement('span');
-    addClass(this.contentElement, 'CONTENT');
+    Util.addClass(this.contentElement, 'CONTENT');
     this.contentElement.setAttribute('tabindex', '-1');
     this.contentElement.innerHTML = this.content;
     this.div.appendChild(this.contentElement);
@@ -206,9 +199,9 @@ export class Node {
   protected radios() {
     for (const [key, value] of this.labels) {
       let content = document.createElement('div');
-      addClass(content, 'RADIOBUTTON');
+      Util.addClass(content, 'RADIOBUTTON');
       let radio = document.createElement('input');
-      addClass(radio, 'RADIO');
+      Util.addClass(radio, 'RADIO');
       let radioId = 'dt_id_' + labelCounter++;
       let labelId = 'dt_id_' + labelCounter++;
       radio.type = 'radio';
@@ -218,7 +211,7 @@ export class Node {
       radio.setAttribute('aria-labelledby', labelId);
       this.radioButtons.push(radio);
       let label = document.createElement('label');
-      addClass(label, 'LABEL');
+      Util.addClass(label, 'LABEL');
       label.id = labelId;
       label.setAttribute('for', radioId);
       label.innerHTML = value;
@@ -230,24 +223,13 @@ export class Node {
 
   protected buttons() {
     let buttons = this.buttonsElement = document.createElement('div');
-    addClass(buttons, 'BUTTONS');
+    Util.addClass(buttons, 'BUTTONS');
     this.div.appendChild(buttons);
     if (this.parent) {
-      this.previous();
-      buttons.appendChild(this.previousButton);
+      Util.makeButton(
+        this.previousName, this.firePrevious.bind(this), buttons, 'PREVIOUS');
     }
-    this.next();
-    buttons.appendChild(this.nextButton);
-  }
-
-  protected next() {
-    if (this.nextButton) {
-      return;
-    }
-    this.nextButton = document.createElement('button');
-    this.nextButton.innerHTML = this.nextName;
-    addClass(this.nextButton, 'NEXT');
-    this.nextButton.addEventListener('click', this.fireNext.bind(this));
+    Util.makeButton(this.nextName, this.fireNext.bind(this), buttons, 'NEXT');
   }
 
   protected fireNext() {
@@ -261,15 +243,6 @@ export class Node {
         return;
       }
     }
-  }
-
-  protected previous() {
-    if (this.previousButton) return;
-    this.previousButton = document.createElement('button');
-    this.previousButton.innerHTML = this.previousName;
-    addClass(this.previousButton, 'PREVIOUS');
-    this.previousButton.addEventListener('click', this.firePrevious.bind(this));
-    this.div.appendChild(this.previousButton);
   }
 
   protected firePrevious() {
@@ -300,10 +273,14 @@ export class Node {
 
 export class Binary extends Node {
 
-  public kind = 'binary'
+  /**
+   * @override
+   */
+  public kind = 'binary';
 
   constructor(public content: string, public title: string, public value = 0) {
-    super(content, title, value, [{text: 'Yes', value: 1}, {text: 'No', value: 0}]);
+    super(content, title, value,
+          [{text: 'Yes', value: 1}, {text: 'No', value: 0}]);
   }
 
 }
@@ -329,18 +306,12 @@ export class Leaf extends Node {
 
   protected buttons() {
     super.buttons();
-    this.summaryButton = document.createElement('button');
-    this.summaryButton.innerHTML = 'Summary';
-    addClass(this.summaryButton, 'SUMMARY');
-    this.summaryButton.addEventListener('click', this.fireSummary.bind(this));
-    this.buttonsElement.appendChild(this.summaryButton);
-    console.log(this.action);
+    this.summaryButton = Util.makeButton(
+      'Summary', this.fireSummary.bind(this), this.buttonsElement);
     if (this.action) {
-      this.actionButton = document.createElement('button');
-      this.actionButton.innerHTML = 'Go';
-      addClass(this.actionButton, 'ACTION');
-      this.actionButton.addEventListener('click', this.fireAction.bind(this));
-      this.buttonsElement.appendChild(this.actionButton);
+      this.actionButton = Util.makeButton(
+        'Go', this.fireAction.bind(this), this.buttonsElement, 'ACTION');
+      document.createElement('button');
     }
   }
 

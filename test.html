@@ -25,8 +25,12 @@ let promise = tree.loadJson(window.location.href.replace(/\/.*\.html$/, 'samples
 promise.then((p) => {
 document.getElementById('status').innerHTML = p;
 tree.toHTML(document.getElementById('output'));
-}).catch((p) =>
-document.getElementById('status').innerHTML = p
+}).catch((p) => {
+let status = document.getElementById('status');
+status.innerHTML = p
+status.style.display = 'block';
+status.style.visibility = 'visible';
+}
 );
 </script>
 
