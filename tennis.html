@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Decision Tree</title>
+<script src="./dist/decisiontree.js"></script>
+<link rel="stylesheet" href="tree.css">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="content">
+    <!-- <header> -->
+    <!--     <h1>Decision Tree</h1> -->
+    <!-- </header> -->
+    <main class="main-content">
+        <div id="status"></div>
+
+        <div id="output"></div>
+
+    </main>
+</div>
+</body>
+<script>
+let tree = new decisiontree.Tree();
+let promise = tree.loadJson(window.location.href.replace(/\/.*\.html$/, 'samples/tennis.json'));
+promise.then((p) => {
+document.getElementById('status').innerHTML = p;
+tree.toHTML(document.getElementById('output'));
+}).catch((p) => {
+let status = document.getElementById('status');
+status.innerHTML = p
+status.style.display = 'block';
+status.style.visibility = 'visible';
+}
+);
+</script>
+
+</html>

@@ -1,0 +1,70 @@
+{
+  "title": "Play Tennis",
+  "content": "Outlook",
+  "type": "nary",
+  "labels": [
+    {"text": "Sunny"
+     "value": 0},
+    {"text": "Overcast"
+     "value": 1},
+    {"text": "Rain"
+     "value": 2}
+  ],
+  "children": [
+    {"value": 0,
+     "title": "Outlook: Sunny",
+     "content": "Humidity",
+     "type": "nary",
+     "labels": [
+       {"value": 0,
+        "text": "High"},
+       {"value": 1,
+        "text": "Normal"}
+     ],
+     "children": [
+       {"value": 1,
+        "title": "Dry"
+        "content": "Yes"
+       },
+       {"value": 0,
+        "title": "Humid"
+        "content": "Dark clouds in the Sky?"
+        "type": "binary",
+        "children": [
+          {"value": 0,
+           "title": "looks like rain",
+           "content": "No"
+          },
+          {"value": 1,
+           "title": "Blue sky",
+           "content": "Yes"
+          }
+        ]
+       }
+     ]
+    },
+    {"value": 1,
+     "title": "Outlook: Overcast",
+     "content": "Yes"
+    },
+    {"value": 2,
+     "title": "Outlook: Rain",
+     "content": "Wind",
+     "type": "nary",
+     "labels": [
+       {"value": 0,
+        "text": "Strong"},
+       {"value": 1,
+        "text": "Weak"}
+     ],
+     "children": [
+       {"value": 0,
+        "title": "Strong wind",
+        "content": "No"},
+       {"value": 1,
+        "title": "Weak wind",
+        "content": "Yes"}
+     ]
+    }
+  ]
+}

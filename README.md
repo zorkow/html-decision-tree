@@ -1,5 +1,9 @@
 # 2020-Image-Description-Decision-Tree
 
+## Installing and Building
+
+
+
 ## JSON Format
 
 Current node format in some pseudo grammar:
@@ -9,7 +13,8 @@ Current node format in some pseudo grammar:
 type: binary|nary|null,
 value: 0-9+,
 title: \w*,
-content: [{
+content: \w*,
+labels: [{
   text: \w*,
   value: 0-9+,
   }],
