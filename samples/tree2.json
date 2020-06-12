@@ -1,4 +1,4 @@
-{"content": "Evaluate the purpose of the image",
+{"content": "Evaluate the purpose of the image:",
  "title": "Decision Tree",
  "type": "nary",
  "labels": [
@@ -11,32 +11,32 @@
  ],
  "children": [
    {"value": 0,
-    "content": "Prepares student for activity or represents a concept?",
+    "content": "Does the image prepare students for an activity or represent a concept?",
     "title": "Icon",
     "type": "binary",
     "children": [
       {"value": 0,
        "title": "Icon",
-       "content": "Do not describe"
+       "content": "Do not describe the image."
       },
       {"value": 1,
        "title": "Icon",
-       "content": "describe the image, select the go button for resources on providing image descriptions",
+       "content": "Describe the image. Select the go button for resources on providing image descriptions.",
        "action": "http://diagramcenter.org/making-images-accessible.html#descriptiontemplates"
       }
     ]
    },
    {"value": 1,
     "title": "Visual interest only",
-    "content": "Do not describe"},
+    "content": "Do not describe the image."},
    {"value": 2,
     "type": "binary",
     "title": "Provides information",
-    "content": "Image provides additional essential info?",
+    "content": "Does the image provide additional essential information?",
     "children": [
       {"value": 0,
        "title": "Provides information",
-       "content": "Do not describe"},
+       "content": "Do not describe the image."},
       {"value": 1,
        "type": "binary",
        "title": "Provides information",
@@ -44,39 +44,39 @@
        "children": [
          {"value": 1,
           "title": "Provides information with embedded text",
-          "content": "Attempt OCR or type the text"},
+          "content": "Attempt optical character recognition (OCR) or type the text."},
          {"value": 0,
           "type": "binary",
           "title": "Provides information with no embedded text",
-          "content": "Does student need spatial info from graphic?",
+          "content": "Does the student need spatial info from the image?",
           "children": [
             {"value": 0,
              "title": "Provides information with no embedded text",
-             "content": "describe the image, select the go button for resources on providing image descriptions",
+             "content": "Describe the image. Select the go button for resources on providing image descriptions.",
              "action": "http://diagramcenter.org/making-images-accessible.html#descriptiontemplates"
             },
             {"value": 1,
              "type": "binary",
              "title": "Provides information with no embedded text",
-             "content": "Requires lengthy description?",
+             "content": "Does the image require a lengthy description?",
              "children": [
                {"value": 0,
-                "title": "image requires a lengthy description",
-                "content": "describe the image, select the go button for resources on providing image descriptions",
+                "title": "Image requires a lengthy description",
+                "content": "Describe the image. Select the go button for resources on providing image descriptions.",
                 "action": "http://diagramcenter.org/making-images-accessible.html#descriptiontemplates"
                },
                {"value": 1,
                 "type": "binary",
-                "title": "image does not require a lengthy description",
+                "title": "Image does not require a lengthy description",
                 "content": "Does the image convey an object(s) with 3-dimensional characteristics?",
                 "children": [
                   {"value": 0,
-                   "title": "image does not convery an object with 3-dimesional characteristics",
-                   "content": "provide a 2 or 2.5-dimesnional tactile graphic"
+                   "title": "Image does not convey an object with 3-dimesional characteristics",
+                   "content": "Provide a 2 or 2.5-dimensional tactile graphic."
                   },
                   {"value": 1,
                    "type": "nary",
-                   "title": "image does convey an object with 3-dimesional characteristics",
+                   "title": "Image does convey an object with 3-dimesional characteristics",
                    "content": "Does the image show processes or stages?",
                    "labels": [
                      {"text": "The image shows processes or stages and has moveable parts ",
@@ -88,43 +88,43 @@
                    ],
                    "children": [
                      {"value": 0,
-                      "title": "image with 3-dimensional characteristics",
-                      "content": "You will need to provide a tactile graphic that shows the overall processes or stages as well as a 3D model or real object for each aspect that conveys an object with 3D characteristics"
+                      "title": "Image with 3-dimensional characteristics",
+                      "content": "You will need to provide a tactile graphic that shows the overall processes or stages as well as a 3D model or real object for each aspect that conveys an object with 3D characteristics."
                      },
                      {"value": 1,
                       "title":"image with 3-dimensional characteristics",
-                      "content": "Is the object too large, too small, too fragile, too expensive, or too dangerous to handle?",
+                      "content": "Is the object too large, small, fragile, expensive, or dangerous to handle?",
                       "type":"binary",
                       "children": [
                         {"value": 0,
-                         "title":"image with 3-dimensional characteristics",
-                         "Content": "Provide real object"
+                         "title":"Image with 3-dimensional characteristics",
+                         "Content": "Provide the real object."
                         },
                         {"value": 1,
-                         "title": "image with 3-dimensional characteristics",
-                         "Content": "Provide a 3D model"}
+                         "title": "Image with 3-dimensional characteristics",
+                         "Content": "Provide a 3D model."}
                       ]
                      },
                      {"value": 2,
                       "content": "Is the object readily available to touch?",
-                      "title": "image with 3-dimensional characteristics",
+                      "title": "Image with 3-dimensional characteristics",
                       "type": "binary",
                       "children": [
                         {"value": 0,
-                         "title":"image with 3-dimensional characteristics",
-                         "content": "Provide a 3D model"},
+                         "title":"Image with 3-dimensional characteristics",
+                         "content": "Provide a 3D model."},
                         {"value": 1,
-                         "title":"image with 3-dimensional characteristics",
-                         "content": "Is the object too large, too small, too fragile, too expensive, or too dangerous to handle?",
+                         "title":"Image with 3-dimensional characteristics",
+                         "content": "Is the object too large, small, fragile, expensive, or dangerous to handle?",
                          "type":"binary",
                          "children": [
                            {"value": 0,
-                            "title":"image with 3-dimensional characteristics",
-                            "content": "Provide real object"
+                            "title":"Image with 3-dimensional characteristics",
+                            "content": "Provide the real object."
                            },
                            {"value": 1,
-                            "title": "image with 3-dimensional characteristics",
-                            "content": "Provide a 3D model"}
+                            "title": "Image with 3-dimensional characteristics",
+                            "content": "Provide a 3D model."}
                          ]
                          
                         }
