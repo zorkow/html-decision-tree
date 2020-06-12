@@ -171,7 +171,7 @@ export abstract class Node {
       radio.id = radioId;
       radio.name = this.variable;
       radio.value = key.toString();
-      radio.setAttribute('aria-labelledby', labelId);
+      // radio.setAttribute('aria-labelledby', labelId);
       this.radioButtons.push(radio);
       let label = document.createElement('label');
       Util.addClass(label, 'LABEL');
