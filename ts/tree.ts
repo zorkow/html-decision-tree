@@ -334,7 +334,7 @@ export class Summary extends Node {
 export class Card {
 
   public div: HTMLElement = Util.makeDiv('NODE');
-  public title: HTMLElement = Util.makeDiv('TITLE');
+  public title: HTMLElement = Util.makeH1('TITLE');
   public content: HTMLElement = Util.makeDiv('CONTENT')
   public buttons: HTMLElement = Util.makeDiv('BUTTONS');
 

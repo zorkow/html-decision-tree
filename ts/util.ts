@@ -23,6 +23,12 @@ namespace Util {
     return div;
   };
 
+  export const makeH1 = function(...classname: string[]) {
+    let div = document.createElement('h1');
+    addClass(div, ...classname);
+    return div;
+  };
+
   export const makeSpan = function(
     parent: HTMLElement, content: string, ...classname: string[]) {
     let span = document.createElement('span');
