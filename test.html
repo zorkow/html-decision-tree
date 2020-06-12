@@ -20,17 +20,10 @@
 </div>
 </body>
 <script>
-let tree = new decisiontree.Tree();
-let promise = tree.loadJson(window.location.href.replace(/\/.*\.html$/, 'samples/tree2.json'));
-promise.then((p) => {
-document.getElementById('status').innerHTML = p;
-tree.toHTML(document.getElementById('output'));
-}).catch((p) => {
-let status = document.getElementById('status');
-status.innerHTML = p
-status.style.display = 'block';
-status.style.visibility = 'visible';
-}
+decisiontree.create(
+  window.location.href.replace(/\/.*\.html$/, 'samples/tree2.json'),
+  document.getElementById('output'),
+  document.getElementById('status')
 );
 </script>
 
