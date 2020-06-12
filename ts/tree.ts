@@ -210,7 +210,7 @@ export abstract class Node {
 
   protected radios() {
     for (const [key, value] of this.labels) {
-      let content = Util.makeDiv('RADIOBUTTON');
+      let content = Util.makeNode('div', 'RADIOBUTTON');
       let radio = document.createElement('input');
       Util.addClass(radio, 'RADIO');
       let radioId = 'dt_id_' + Node.labelCounter++;
@@ -334,7 +334,7 @@ export class Summary extends Node {
 
   public kind = 'summary';
   public nextName = 'Restart';
-  public summaryElement = Util.makeDiv('SUMMARY');
+  public summaryElement = Util.makeNode('div', 'SUMMARY');
   
   constructor() {
     super('', 'Summary');
@@ -368,7 +368,7 @@ export class Summary extends Node {
   }
 
   private makeSummaryLine(question: string, answer: string): HTMLElement {
-    let div = Util.makeDiv('SUMMARYLINE');
+    let div = Util.makeNode('div', 'SUMMARYLINE');
     Util.makeSpan(div, question, 'QUESTION');
     Util.makeSpan(div, answer, 'ANSWER');
     return div;
@@ -378,10 +378,10 @@ export class Summary extends Node {
 
 export class Card {
 
-  public div: HTMLElement = Util.makeDiv('NODE');
-  public title: HTMLElement = Util.makeH1('TITLE');
-  public content: HTMLElement = Util.makeDiv('CONTENT')
-  public buttons: HTMLElement = Util.makeDiv('BUTTONS');
+  public div: HTMLElement = Util.makeNode('div', 'NODE');
+  public title: HTMLElement = Util.makeNode('h1', 'TITLE');
+  public content: HTMLElement = Util.makeNode('div', 'CONTENT')
+  public buttons: HTMLElement = Util.makeNode('div', 'BUTTONS');
 
   constructor() {
     this.div.appendChild(this.title);

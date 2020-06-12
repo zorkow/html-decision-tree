@@ -17,16 +17,10 @@ namespace Util {
     rest.forEach(x => element.classList.add(prefix + x.toUpperCase()));
   };
 
-  export const makeDiv = function(...classname: string[]) {
-    let div = document.createElement('div');
-    addClass(div, ...classname);
-    return div;
-  };
-
-  export const makeH1 = function(...classname: string[]) {
-    let div = document.createElement('h1');
-    addClass(div, ...classname);
-    return div;
+  export const makeNode = function(tag: string, ...classname: string[]) {
+    let node = document.createElement(tag);
+    addClass(node, ...classname);
+    return node;
   };
 
   export const makeSpan = function(
