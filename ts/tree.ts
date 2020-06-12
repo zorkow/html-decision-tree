@@ -124,22 +124,16 @@ export abstract class Node {
   public children: Map<number, Node> = new Map<number, Node>();
   public parent: Node = null;
   public variable: string = 'dt_variable_' + counter++;
+  public card: Card;
   public radioButtons: HTMLElement[] = [];
-  public div: HTMLElement;
-  public titleElement: HTMLElement;
-  public contentElement: HTMLElement;
-  public buttonsElement: HTMLElement;
   
-  // private nextButton: HTMLElement;
-  // private previousButton: HTMLElement;
-
-
   public nextName: string = 'Next';
   public previousName: string = 'Back';
 
   constructor(public content: string, public title: string = '',
               public value = 0,
               labels: {text: string, value: number}[] = []) {
+    this.card = new Card();
     for (let {text: text, value: value} of labels) {
       this.labels.set(value, text);
     }
@@ -176,23 +170,17 @@ export abstract class Node {
   }
 
   public toHtml(): HTMLElement {
-    this.div = document.createElement('div');
-    Util.addClass(this.div, 'NODE', this.kind);
+    Util.addClass(this.card.div, this.kind);
     // Actual title element
-    this.titleElement = document.createElement('span');
-    Util.addClass(this.titleElement, 'TITLE');
-    this.titleElement.setAttribute('tabindex', '-1');
-    this.titleElement.innerHTML = this.title;
-    this.div.appendChild(this.titleElement);
+    this.card.title.innerHTML = this.title;
     // Actual content element
-    this.contentElement = document.createElement('span');
-    Util.addClass(this.contentElement, 'CONTENT');
-    this.contentElement.setAttribute('tabindex', '-1');
-    this.contentElement.innerHTML = this.content;
-    this.div.appendChild(this.contentElement);
+    let content = document.createElement('span');
+    Util.addClass(content, 'CONTENT');
+    content.innerHTML = this.content;
+    this.card.content.appendChild(content);
     this.radios();
     this.buttons();
-    return this.div;
+    return this.card.div;
   }
 
 
@@ -217,19 +205,16 @@ export abstract class Node {
       label.innerHTML = value;
       content.appendChild(radio);
       content.appendChild(label);
-      this.div.appendChild(content);
+      this.card.content.appendChild(content);
     }
   }
 
   protected buttons() {
-    let buttons = this.buttonsElement = document.createElement('div');
-    Util.addClass(buttons, 'BUTTONS');
-    this.div.appendChild(buttons);
     if (this.parent) {
       Util.makeButton(
-        this.previousName, this.firePrevious.bind(this), buttons, 'PREVIOUS');
+        this.previousName, this.firePrevious.bind(this), this.card.buttons, 'PREVIOUS');
     }
-    Util.makeButton(this.nextName, this.fireNext.bind(this), buttons, 'NEXT');
+    Util.makeButton(this.nextName, this.fireNext.bind(this), this.card.buttons, 'NEXT');
   }
 
   protected fireNext() {
@@ -255,18 +240,11 @@ export abstract class Node {
 
   // TODO: This is probably overkill.
   public show() {
-    this.div.style.display = 'block';
-    this.contentElement.setAttribute('tabindex', '0');
-    this.titleElement.setAttribute('aria-live', 'polite');
-    this.titleElement.setAttribute('tabindex', '0');
-    // this.titleElement.focus();
+    this.card.show();
   }
 
   public hide() {
-    this.div.style.display = 'none';
-    this.contentElement.setAttribute('tabindex', '-1');
-    this.titleElement.removeAttribute('aria-live');
-    this.titleElement.setAttribute('tabindex', '-1');
+    this.card.hide();
   }
 
 }
@@ -307,10 +285,10 @@ export class Leaf extends Node {
   protected buttons() {
     super.buttons();
     this.summaryButton = Util.makeButton(
-      'Summary', this.fireSummary.bind(this), this.buttonsElement);
+      'Summary', this.fireSummary.bind(this), this.card.buttons);
     if (this.action) {
       this.actionButton = Util.makeButton(
-        'Go', this.fireAction.bind(this), this.buttonsElement, 'ACTION');
+        'Go', this.fireAction.bind(this), this.card.buttons, 'ACTION');
       document.createElement('button');
     }
   }
@@ -330,4 +308,43 @@ export class Leaf extends Node {
     this.tree.history = [];
   }
 
+}
+
+
+let makeDiv = function(...classname: string[]) {
+  let div = document.createElement('div');
+  Util.addClass(div, ...classname);
+  return div;
+};
+
+export class Card {
+
+  public div: HTMLElement = makeDiv('NODE');
+  public title: HTMLElement = makeDiv('TITLE');
+  public content: HTMLElement = makeDiv('CONTENT')
+  public buttons: HTMLElement = makeDiv('BUTTONS');
+
+  constructor() {
+    this.div.appendChild(this.title);
+    this.title.setAttribute('tabindex', '-1');
+    this.div.appendChild(this.content);
+    this.content.setAttribute('tabindex', '-1');
+    this.div.appendChild(this.buttons);
+  }
+
+  public show() {
+    this.div.style.display = 'block';
+    this.content.setAttribute('tabindex', '0');
+    this.title.setAttribute('aria-live', 'polite');
+    this.title.setAttribute('tabindex', '0');
+    // this.titleElement.focus();
+  }
+
+  public hide() {
+    this.div.style.display = 'none';
+    this.content.setAttribute('tabindex', '-1');
+    this.title.removeAttribute('aria-live');
+    this.title.setAttribute('tabindex', '-1');
+  }
+  
 }
