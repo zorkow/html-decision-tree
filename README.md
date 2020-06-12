@@ -15,6 +15,12 @@ npm run-script build
 
 This builds the `decisiontree.js` library in `dist`.
 
+Alternative build is done using typescript and webpack:
+
+``` Bash
+npx tsc
+npx webpack
+```
 
 Or simply install the package using 
 
