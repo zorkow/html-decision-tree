@@ -8,7 +8,7 @@ export class Tree {
   public root: Node = null;
   public history: number[] = [];
   public rootElement: HTMLElement;
-  public summaryElement: HTMLElement;
+  public summaryElement: Summary = new Summary();
 
   public loadJson(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -45,6 +45,8 @@ export class Tree {
     this.root = Node.fromJson(JSON.parse(this.jsonStr));
     let dfs = new DepthFirst(this, (x: Node) => x);
     dfs.result.forEach(n => n.tree = this);
+    this.summaryElement.parent = this.root;
+    this.summaryElement.tree = this;
   }
 
 
@@ -55,43 +57,15 @@ export class Tree {
       node.appendChild(n.toHtml());
       n.hide();
     });
+    node.appendChild(this.summaryElement.toHtml());
+    this.summaryElement.hide();
     this.root.show();
   }
 
   public summary(node: Node) {
     node.hide();
-    let result: [string, string][] = [[node.content, '']];
-    let count = 0;
-    node = node.parent;
-    while (node) {
-      count++;
-      let value = this.history[this.history.length - count];
-      result.unshift([node.content, node.labels.get(value)]);
-      node = node.parent;
-    }
-    this.printSummary(result);
-  }
-
-  private printSummary(summary: [string, string][]) {
-    this.summaryElement = document.createElement('div');
-    Util.addClass(this.summaryElement, 'NODE', 'SUMMARY');
-    this.rootElement.appendChild(this.summaryElement);
-    let title = document.createElement('span');
-    Util.addClass(title, 'TITLE');
-    title.setAttribute('tabindex', '-1');
-    title.innerHTML = 'Summary';
-    this.summaryElement.appendChild(title);
-    for (let [question, result] of summary) {
-      let div = document.createElement('div');
-      let span1 = document.createElement('span');
-      span1.innerHTML = question;
-      div.appendChild(span1);
-      let span2 = document.createElement('span');
-      span2.innerHTML = result;
-      div.appendChild(span2);
-      this.summaryElement.appendChild(div);
-    }
-    this.summaryElement.style.display = 'block';
+    this.summaryElement.parent = node;
+    this.summaryElement.show();
   }
 
 }
@@ -188,8 +162,7 @@ export abstract class Node {
 
   protected radios() {
     for (const [key, value] of this.labels) {
-      let content = document.createElement('div');
-      Util.addClass(content, 'RADIOBUTTON');
+      let content = Util.makeDiv('RADIOBUTTON');
       let radio = document.createElement('input');
       Util.addClass(radio, 'RADIO');
       let radioId = 'dt_id_' + labelCounter++;
@@ -296,7 +269,6 @@ export class Leaf extends Node {
   }
 
   protected fireAction() {
-    console.log('Firing!');
     window.open(this.action, '_blank');
   }
 
@@ -313,18 +285,58 @@ export class Leaf extends Node {
 }
 
 
-let makeDiv = function(...classname: string[]) {
-  let div = document.createElement('div');
-  Util.addClass(div, ...classname);
-  return div;
-};
+export class Summary extends Node {
+
+  public kind = 'summary';
+  public nextName = 'Restart';
+  public summaryElement = Util.makeDiv('SUMMARY');
+  
+  constructor() {
+    super('', 'Summary');
+    this.card.content.appendChild(this.summaryElement);
+  }
+
+  protected fireNext() {
+    this.hide();
+    this.tree.root.show();
+    this.tree.history = [];
+  }
+
+  public show() {
+    super.show();
+    this.compileSummary();
+  }
+
+  private compileSummary() {
+    let count = 0;
+    let hl = this.tree.history.length;
+    let node = this.parent;
+    let result = [];
+    this.summaryElement.innerHTML = '';
+    do {
+      let answer = count ? node.labels.get(this.tree.history[hl - count]) : '';
+      result.unshift(this.makeSummaryLine(node.content, answer));
+      node = node.parent;
+      count++;
+    } while (node);
+    result.forEach(x => this.summaryElement.appendChild(x));
+  }
+
+  private makeSummaryLine(question: string, answer: string): HTMLElement {
+    let div = Util.makeDiv('SUMMARYLINE');
+    Util.makeSpan(div, question, 'QUESTION');
+    Util.makeSpan(div, answer, 'ANSWER');
+    return div;
+  }
+
+}
 
 export class Card {
 
-  public div: HTMLElement = makeDiv('NODE');
-  public title: HTMLElement = makeDiv('TITLE');
-  public content: HTMLElement = makeDiv('CONTENT')
-  public buttons: HTMLElement = makeDiv('BUTTONS');
+  public div: HTMLElement = Util.makeDiv('NODE');
+  public title: HTMLElement = Util.makeDiv('TITLE');
+  public content: HTMLElement = Util.makeDiv('CONTENT')
+  public buttons: HTMLElement = Util.makeDiv('BUTTONS');
 
   constructor() {
     this.div.appendChild(this.title);

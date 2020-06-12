@@ -47,24 +47,34 @@ body {
     padding-left: 0.5rem;
 }
 
-.DT_NEXT {
-    background-color: #00758E;
-    color: #ffffff;
+.DT_BUTTON {
     border: 1px solid #00758E;
     box-sizing: border-box;
     border-radius: 3px;
-    margin-top: 1rem;
     padding: 0.5rem 1rem;
+    margin: 1rem 1rem 0 0;
+}
+
+.DT_NEXT {
+    background-color: #00758E;
+    color: #ffffff;
 }
 
 .DT_PREVIOUS {
     background: #ffffff;
     color: #00758E;
-    border: 1px solid #00758E;
-    box-sizing: border-box;
-    border-radius: 3px;
-    margin: 1rem 1rem 0 0;
-    padding: 0.5rem 1rem;
+}
+
+.DT_SUMMARYLINE {
+    padding: 1rem;
+}
+
+.DT_QUESTION {
+    float: left;
+}
+
+.DT_ANSWER {
+    float: right;
 }
 
 @media only screen and (min-width: 660px) {
