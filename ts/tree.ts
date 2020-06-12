@@ -371,7 +371,7 @@ export class Summary extends Node {
 
   public kind = 'summary';
   public nextName = 'Restart';
-  public summaryElement = Util.makeNode('div', 'SUMMARY');
+  public summaryElement = Util.makeNode('table', 'SUMMARY');
   
   constructor() {
     super('', 'Summary');
@@ -405,10 +405,14 @@ export class Summary extends Node {
   }
 
   private makeSummaryLine(question: string, answer: string): HTMLElement {
-    let div = Util.makeNode('div', 'SUMMARYLINE');
-    Util.makeSpan(div, question, 'QUESTION');
-    Util.makeSpan(div, answer, 'ANSWER');
-    return div;
+    let tr = Util.makeNode('tr', 'SUMMARYLINE');
+    let td1 = Util.makeNode('td', 'QUESTION');
+    tr.appendChild(td1);
+    Util.makeSpan(td1, question, 'QUESTION');
+    let td2 = Util.makeNode('td', 'ANSWER');
+    tr.appendChild(td2);
+    Util.makeSpan(td2, answer, 'ANSWER');
+    return tr;
   }
 
 }
