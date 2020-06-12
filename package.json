@@ -8,8 +8,12 @@
     "build": "npx tsc; npx webpack"
   },
   "maintainers": [
-    "Diagram Codesprint <diagram-codesprint@benetech.org>"
+    "Volker Sorge <v.sorge@progressiveaccess.com>"
   ],
+  "bugs": {
+    "email": "diagram-codesprint@benetech.org",
+    "url": "https://github.com/diagram-codesprint/"
+  },
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
@@ -32,6 +36,7 @@
   "files": [
     "LICENSE",
     "README.md",
-    "dist"
+    "dist",
+    "samples"
   ]
 }

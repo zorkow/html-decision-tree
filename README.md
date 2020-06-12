@@ -20,7 +20,7 @@ This builds the `decisiontree.js` library in `dist`.
 
 Here is a very simple decision tree for deciding if you should play tennis:
 
-https://diagram-codesprint.github.io/2020-Image-Description-Decision-Tree/tennis.html
+[Tennis example](https://diagram-codesprint.github.io/2020-Image-Description-Decision-Tree/samples/tennis.html)
 
 Here is the corresponding flow chart decision tree for deciding if you should play tennis:
 
@@ -55,7 +55,7 @@ The decision tree was developed for the following project:
 
 ### HTML Demo View of the Image Description Decision Tree
 
-https://diagram-codesprint.github.io/2020-Image-Description-Decision-Tree/test.html
+[Test example](https://diagram-codesprint.github.io/2020-Image-Description-Decision-Tree/samples/test.html)
 
 ### Wireframes
 
