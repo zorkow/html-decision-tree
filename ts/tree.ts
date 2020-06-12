@@ -340,24 +340,24 @@ export class Card {
 
   constructor() {
     this.div.appendChild(this.title);
-    this.title.setAttribute('tabindex', '-1');
+    // this.title.setAttribute('tabindex', '-1');
     this.div.appendChild(this.content);
-    this.content.setAttribute('tabindex', '-1');
+    // this.content.setAttribute('tabindex', '-1');
     this.div.appendChild(this.buttons);
   }
 
   public show() {
     this.div.style.display = 'block';
-    this.content.setAttribute('tabindex', '0');
+    // this.content.setAttribute('tabindex', '0');
     this.title.setAttribute('aria-live', 'polite');
-    this.title.setAttribute('tabindex', '0');
+    // this.title.setAttribute('tabindex', '0');
   }
 
   public hide() {
     this.div.style.display = 'none';
-    this.content.setAttribute('tabindex', '-1');
+    // this.content.setAttribute('tabindex', '-1');
     this.title.removeAttribute('aria-live');
-    this.title.setAttribute('tabindex', '-1');
+    // this.title.setAttribute('tabindex', '-1');
   }
 
 }
