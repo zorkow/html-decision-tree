@@ -1,4 +1,10 @@
-// Initial tree
+//                    GNU GENERAL PUBLIC LICENSE
+//                       Version 3, 29 June 2007
+//
+//  (c) 2020 Volker Sorge, v.sorge@progressiveaccess.com
+//           Benetech & ETS hackathon
+//
+
 import Util from './util';
 
 
@@ -340,7 +346,7 @@ export class Card {
 
   constructor() {
     this.div.appendChild(this.title);
-    // this.title.setAttribute('tabindex', '-1');
+    this.title.setAttribute('tabindex', '-1');
     this.div.appendChild(this.content);
     // this.content.setAttribute('tabindex', '-1');
     this.div.appendChild(this.buttons);
@@ -350,6 +356,7 @@ export class Card {
     this.div.style.display = 'block';
     // this.content.setAttribute('tabindex', '0');
     this.title.setAttribute('aria-live', 'polite');
+    this.title.focus();
     // this.title.setAttribute('tabindex', '0');
   }
 
