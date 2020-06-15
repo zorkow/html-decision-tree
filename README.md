@@ -57,12 +57,14 @@ labels: [{
   value: 0-9+,
   }],
 children: [node*],
+action: URL
 }
 ```
 
 The idea is nary nodes have content (that is the description on the radio
 button) which is linked via the value to the children . Binary nodes have
-default description content.
+default description content as Yes (0) and No (1). Actions are only considered
+in leaf nodes and open a new Tab.
 
 ### Acknowledgments
 
