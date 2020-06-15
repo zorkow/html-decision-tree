@@ -37,7 +37,7 @@ Here is a very simple decision tree for deciding if you should play tennis:
 Here is the corresponding flow chart decision tree for deciding if you should play tennis in SVG
 
 ![Alt Tennis Decision Tree](./samples/tennis.svg)
-<img style="height:80%;" sre="./samples/tennis.svg">
+<img sre="./samples/tennis.svg">
 
 and in [JSON format](./samples/tennis.json).
 
