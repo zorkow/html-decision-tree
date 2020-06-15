@@ -1,12 +1,12 @@
 {
   "name": "html-decision-tree",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Image Description Decision Tree",
   "main": "dist/decisiontree.js",
   "types": "dist/decisiontree.d.ts",
   "scripts": {
     "build": "npx tsc; npx webpack",
-    "publish": "npx tsc; npx webpack"
+    "publish": "npm install; npx tsc; npx webpack"
   },
   "maintainers": [
     "Volker Sorge <v.sorge@progressiveaccess.com>"
