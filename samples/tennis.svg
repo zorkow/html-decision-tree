@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="960" height="800">
-  <g transform="translate(5 -100) scale(0.75 0.75)">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="600">
+  <g transform="translate(5 -100) scale(0.60 0.60)">
     <path d="M597.53 187.45c0-2.77 2.24-5 5-5h150c2.76 0 5 2.23 5 5v110c0 2.76-2.24 5-5 5h-150c-2.76 0-5-2.24-5-5z" stroke="#333" stroke-width="2" fill="#fff"/>
     <use xlink:href="#a" transform="matrix(1,0,0,1,602.5325000000003,187.44617274832004) translate(17.81481481481481 48.59722222222222)"/>
     <use xlink:href="#b" transform="matrix(1,0,0,1,602.5325000000003,187.44617274832004) translate(80.92592592592592 48.59722222222222)"/>
