@@ -34,9 +34,12 @@ Here is a very simple decision tree for deciding if you should play tennis:
 
 [Tennis example](https://diagram-codesprint.github.io/2020-Image-Description-Decision-Tree/samples/tennis.html)
 
-Here is the corresponding flow chart decision tree for deciding if you should play tennis:
+Here is the corresponding flow chart decision tree for deciding if you should play tennis in SVG
 
-https://app.lucidchart.com/publicSegments/view/ba9eb5f5-98c9-41d2-a3aa-c3cfeb74a59f
+![Alt Tennis Decision Tree](./samples/tennis.svg)
+<img sre="./samples/tennis.svg">
+
+and in [JSON format](./samples/tennis.json).
 
 
 ## JSON Format
