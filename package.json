@@ -1,11 +1,12 @@
 {
   "name": "html-decision-tree",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Image Description Decision Tree",
   "main": "dist/decisiontree.js",
   "types": "dist/decisiontree.d.ts",
   "scripts": {
-    "build": "npx tsc; npx webpack"
+    "build": "npx tsc; npx webpack",
+    "publish": "npx tsc; npx webpack"
   },
   "maintainers": [
     "Volker Sorge <v.sorge@progressiveaccess.com>"
@@ -14,15 +15,16 @@
     "email": "diagram-codesprint@benetech.org",
     "url": "https://github.com/diagram-codesprint/"
   },
-  "license": "GPL-3.0",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/diagram-codesprint/2020-Image-Description-Decision-Tree"
+    "url": "https://github.com/zorkow/html-decision-tree"
   },
   "keywords": [
-    "decision tree"
+    "decision tree",
+    "accessibility"
   ],
-  "homepage": "https://github.com/diagram-codesprint/2020-Image-Description-Decision-Tree",
+  "homepage": "https://github.com/zorkow/html-decision-tree",
   "dependencies": {},
   "devDependencies": {
     "ts-loader": "^6.2.0",
