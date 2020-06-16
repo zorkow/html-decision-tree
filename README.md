@@ -32,7 +32,7 @@ npm install html-decision-tree
 
 Here is a very simple decision tree for deciding if you should play tennis:
 
-[Tennis example](https://diagram-codesprint.github.io/2020-Image-Description-Decision-Tree/samples/tennis.html)
+[Tennis example](https://zorkow.github.io/html-decision-tree/samples/tennis.html)
 
 Here is the corresponding flow chart decision tree for deciding if you should play tennis in SVG
 
