@@ -2,6 +2,8 @@
 
 This is a generic library for building a simple web-based decision trees UI.
 Data is provided in JSON format, which is then displayed on a website.
+The tree is fully accessible both in terms of keyboard browsing and screen reading. 
+It has been tested with all major screenreaders.
 
 
 ## Installing and Building
