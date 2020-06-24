@@ -75,6 +75,6 @@ in leaf nodes and open a new Tab.
 * **Brian Hochhalter** for UI design and wireframe design and prototyping
 * **Danielle Vargas**, [W.W.Norton](https://wwnorton.com/), for CSS styles,
   accessibility testing and design
-* **Amaya Webster**, [benetech](https://benetech.org), for suggesting the
-  initial idea at the 2020 DIAGRAM and ETS Code Sprint
+* **Amaya Webster**, [Benetech](https://benetech.org), for suggesting the
+  initial idea at the 2020 DIAGRAM and ETS Code Sprint, providing an [initial example and putting it into JSON](https://github.com/diagram-codesprint/2020-Image-Description-Decision-Tree). 
 
