@@ -68,8 +68,11 @@ in leaf nodes and open a new Tab.
 
 ### Acknowledgments
 
-* **Amaya Webster** for suggesting the initial idea at the 2020 DIAGRAM and ETS Code Sprint
+* **Carlos Cavalie**, [ETS](https://www.ets.org), for accessibility testing and
+  design
 * **Brian Hochhalter** for UI design and wireframe design and prototyping
-* **Danielle Vargas** for CSS styles and accessibility testing and design
-* **Carlos Cavalie** for accessibility testing and design
+* **Danielle Vargas**, [W.W.Norton](https://wwnorton.com/), for CSS styles,
+  accessibility testing and design
+* **Amaya Webster**, [benetech](https://benetech.org), for suggesting the
+  initial idea at the 2020 DIAGRAM and ETS Code Sprint
 
